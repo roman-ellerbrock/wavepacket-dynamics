@@ -23,6 +23,15 @@ void execute_job(Wavefunction& Psi, const Hamiltonian& H,
 		Lanczos lan;
 		lan.calculate(Psi, H, basis, nkrylov);
 		lan.print();
+	} else if (job == "Integrate") {
+		auto nkrylov = read_key<size_t>(node, "krylov_size");
+		auto dt = read_key<double>(node, "dt");
+		auto tmax = read_key<double>(node, "tmax");
+		auto out = read_key<double>(node, "out");
+		auto accuracy = read_key<double>(node, "accuracy");
+		Lanczos lan;
+		double t = 0;
+		lan.integrate(Psi, t, dt, tmax, out, H, basis, nkrylov);
 	} else {
 		cerr << "Cannot find job named: " << job << endl;
 		exit(3);
@@ -39,6 +48,7 @@ void run(const string& filename) {
 
 	/// Create Wavefunction
 	Wavefunction Psi(basis);
+	Psi.occupy(basis);
 
 	/// Create Hamiltonian
 	Node Hnode = read_key<Node>(input, "Hamiltonian");

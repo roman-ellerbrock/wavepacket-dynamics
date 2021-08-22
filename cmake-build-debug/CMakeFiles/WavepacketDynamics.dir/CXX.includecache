@@ -20,9 +20,13 @@ ProductOperator.h
 vector
 -
 
-/Users/romanellerbrock/CLionProjects/WavepacketDynamics/src/Operators.cpp
-Operators.h
-/Users/romanellerbrock/CLionProjects/WavepacketDynamics/src/Operators.h
+/Users/romanellerbrock/CLionProjects/WavepacketDynamics/src/Lanczos.h
+Wavefunction.h
+/Users/romanellerbrock/CLionProjects/WavepacketDynamics/src/Wavefunction.h
+Hamiltonian.h
+/Users/romanellerbrock/CLionProjects/WavepacketDynamics/src/Hamiltonian.h
+Util/QMConstants.h
+/Users/romanellerbrock/CLionProjects/WavepacketDynamics/src/Util/QMConstants.h
 
 /Users/romanellerbrock/CLionProjects/WavepacketDynamics/src/Operators.h
 Hamiltonian.h
@@ -59,6 +63,20 @@ string
 -
 iostream
 -
+
+/Users/romanellerbrock/CLionProjects/WavepacketDynamics/src/yaml-parser.cpp
+yaml-cpp/yaml.h
+/Users/romanellerbrock/CLionProjects/WavepacketDynamics/src/yaml-cpp/yaml.h
+Basis.h
+/Users/romanellerbrock/CLionProjects/WavepacketDynamics/src/Basis.h
+Wavefunction.h
+/Users/romanellerbrock/CLionProjects/WavepacketDynamics/src/Wavefunction.h
+Lanczos.h
+/Users/romanellerbrock/CLionProjects/WavepacketDynamics/src/Lanczos.h
+Hamiltonian.h
+/Users/romanellerbrock/CLionProjects/WavepacketDynamics/src/Hamiltonian.h
+Operators.h
+/Users/romanellerbrock/CLionProjects/WavepacketDynamics/src/Operators.h
 
 /usr/local/include/QuTree/Core/Matrix.h
 stdafx.h
@@ -101,6 +119,10 @@ complex
 -
 memory
 -
+
+/usr/local/include/QuTree/Util/QMConstants.h
+Core/stdafx.h
+/usr/local/include/QuTree/Util/Core/stdafx.h
 
 /usr/local/include/eigen3/Eigen/Cholesky
 Core

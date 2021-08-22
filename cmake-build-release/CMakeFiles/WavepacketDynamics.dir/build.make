@@ -92,9 +92,22 @@ CMakeFiles/WavepacketDynamics.dir/src/Operators.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/WavepacketDynamics.dir/src/Operators.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/romanellerbrock/CLionProjects/WavepacketDynamics/src/Operators.cpp -o CMakeFiles/WavepacketDynamics.dir/src/Operators.cpp.s
 
+CMakeFiles/WavepacketDynamics.dir/src/PrimitiveOperators.cpp.o: CMakeFiles/WavepacketDynamics.dir/flags.make
+CMakeFiles/WavepacketDynamics.dir/src/PrimitiveOperators.cpp.o: ../src/PrimitiveOperators.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/romanellerbrock/CLionProjects/WavepacketDynamics/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/WavepacketDynamics.dir/src/PrimitiveOperators.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/WavepacketDynamics.dir/src/PrimitiveOperators.cpp.o -c /Users/romanellerbrock/CLionProjects/WavepacketDynamics/src/PrimitiveOperators.cpp
+
+CMakeFiles/WavepacketDynamics.dir/src/PrimitiveOperators.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/WavepacketDynamics.dir/src/PrimitiveOperators.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/romanellerbrock/CLionProjects/WavepacketDynamics/src/PrimitiveOperators.cpp > CMakeFiles/WavepacketDynamics.dir/src/PrimitiveOperators.cpp.i
+
+CMakeFiles/WavepacketDynamics.dir/src/PrimitiveOperators.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/WavepacketDynamics.dir/src/PrimitiveOperators.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/romanellerbrock/CLionProjects/WavepacketDynamics/src/PrimitiveOperators.cpp -o CMakeFiles/WavepacketDynamics.dir/src/PrimitiveOperators.cpp.s
+
 CMakeFiles/WavepacketDynamics.dir/src/yaml-parser.cpp.o: CMakeFiles/WavepacketDynamics.dir/flags.make
 CMakeFiles/WavepacketDynamics.dir/src/yaml-parser.cpp.o: ../src/yaml-parser.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/romanellerbrock/CLionProjects/WavepacketDynamics/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/WavepacketDynamics.dir/src/yaml-parser.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/romanellerbrock/CLionProjects/WavepacketDynamics/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/WavepacketDynamics.dir/src/yaml-parser.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/WavepacketDynamics.dir/src/yaml-parser.cpp.o -c /Users/romanellerbrock/CLionProjects/WavepacketDynamics/src/yaml-parser.cpp
 
 CMakeFiles/WavepacketDynamics.dir/src/yaml-parser.cpp.i: cmake_force
@@ -107,7 +120,7 @@ CMakeFiles/WavepacketDynamics.dir/src/yaml-parser.cpp.s: cmake_force
 
 CMakeFiles/WavepacketDynamics.dir/src/yaml-helper.cpp.o: CMakeFiles/WavepacketDynamics.dir/flags.make
 CMakeFiles/WavepacketDynamics.dir/src/yaml-helper.cpp.o: ../src/yaml-helper.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/romanellerbrock/CLionProjects/WavepacketDynamics/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/WavepacketDynamics.dir/src/yaml-helper.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/romanellerbrock/CLionProjects/WavepacketDynamics/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/WavepacketDynamics.dir/src/yaml-helper.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/WavepacketDynamics.dir/src/yaml-helper.cpp.o -c /Users/romanellerbrock/CLionProjects/WavepacketDynamics/src/yaml-helper.cpp
 
 CMakeFiles/WavepacketDynamics.dir/src/yaml-helper.cpp.i: cmake_force
@@ -122,6 +135,7 @@ CMakeFiles/WavepacketDynamics.dir/src/yaml-helper.cpp.s: cmake_force
 WavepacketDynamics_OBJECTS = \
 "CMakeFiles/WavepacketDynamics.dir/main.cpp.o" \
 "CMakeFiles/WavepacketDynamics.dir/src/Operators.cpp.o" \
+"CMakeFiles/WavepacketDynamics.dir/src/PrimitiveOperators.cpp.o" \
 "CMakeFiles/WavepacketDynamics.dir/src/yaml-parser.cpp.o" \
 "CMakeFiles/WavepacketDynamics.dir/src/yaml-helper.cpp.o"
 
@@ -130,6 +144,7 @@ WavepacketDynamics_EXTERNAL_OBJECTS =
 
 WavepacketDynamics: CMakeFiles/WavepacketDynamics.dir/main.cpp.o
 WavepacketDynamics: CMakeFiles/WavepacketDynamics.dir/src/Operators.cpp.o
+WavepacketDynamics: CMakeFiles/WavepacketDynamics.dir/src/PrimitiveOperators.cpp.o
 WavepacketDynamics: CMakeFiles/WavepacketDynamics.dir/src/yaml-parser.cpp.o
 WavepacketDynamics: CMakeFiles/WavepacketDynamics.dir/src/yaml-helper.cpp.o
 WavepacketDynamics: CMakeFiles/WavepacketDynamics.dir/build.make
@@ -137,7 +152,7 @@ WavepacketDynamics: /usr/local/lib/libQuTree.dylib
 WavepacketDynamics: /usr/local/lib/libyaml-cpp.0.6.3.dylib
 WavepacketDynamics: /usr/local/opt/openblas/lib/libblas.dylib
 WavepacketDynamics: CMakeFiles/WavepacketDynamics.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/romanellerbrock/CLionProjects/WavepacketDynamics/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable WavepacketDynamics"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/romanellerbrock/CLionProjects/WavepacketDynamics/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable WavepacketDynamics"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/WavepacketDynamics.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

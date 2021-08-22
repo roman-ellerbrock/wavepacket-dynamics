@@ -338,6 +338,7 @@ CMakeFiles/WavepacketDynamics.dir/src/yaml-parser.cpp.o: \
  /usr/local/include/QuTree/Core/TensorShape.h \
  /usr/local/include/QuTree/Core/Vector.h \
  /usr/local/include/QuTree/Core/stdafx.h \
+ /usr/local/include/QuTree/Util/QMConstants.h \
  /usr/local/include/eigen3/Eigen/Cholesky \
  /usr/local/include/eigen3/Eigen/Core \
  /usr/local/include/eigen3/Eigen/Dense \

@@ -111,6 +111,12 @@
 		<Unit filename="/Users/romanellerbrock/CLionProjects/WavepacketDynamics/src/PrimitiveBasis.h">
 			<Option target="WavepacketDynamics"/>
 		</Unit>
+		<Unit filename="/Users/romanellerbrock/CLionProjects/WavepacketDynamics/src/PrimitiveOperators.cpp">
+			<Option target="WavepacketDynamics"/>
+		</Unit>
+		<Unit filename="/Users/romanellerbrock/CLionProjects/WavepacketDynamics/src/PrimitiveOperators.h">
+			<Option target="WavepacketDynamics"/>
+		</Unit>
 		<Unit filename="/Users/romanellerbrock/CLionProjects/WavepacketDynamics/src/ProductOperator.h">
 			<Option target="WavepacketDynamics"/>
 		</Unit>

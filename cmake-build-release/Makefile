@@ -177,6 +177,30 @@ src/Operators.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/WavepacketDynamics.dir/build.make CMakeFiles/WavepacketDynamics.dir/src/Operators.cpp.s
 .PHONY : src/Operators.cpp.s
 
+src/PrimitiveOperators.o: src/PrimitiveOperators.cpp.o
+.PHONY : src/PrimitiveOperators.o
+
+# target to build an object file
+src/PrimitiveOperators.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/WavepacketDynamics.dir/build.make CMakeFiles/WavepacketDynamics.dir/src/PrimitiveOperators.cpp.o
+.PHONY : src/PrimitiveOperators.cpp.o
+
+src/PrimitiveOperators.i: src/PrimitiveOperators.cpp.i
+.PHONY : src/PrimitiveOperators.i
+
+# target to preprocess a source file
+src/PrimitiveOperators.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/WavepacketDynamics.dir/build.make CMakeFiles/WavepacketDynamics.dir/src/PrimitiveOperators.cpp.i
+.PHONY : src/PrimitiveOperators.cpp.i
+
+src/PrimitiveOperators.s: src/PrimitiveOperators.cpp.s
+.PHONY : src/PrimitiveOperators.s
+
+# target to generate assembly for a file
+src/PrimitiveOperators.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/WavepacketDynamics.dir/build.make CMakeFiles/WavepacketDynamics.dir/src/PrimitiveOperators.cpp.s
+.PHONY : src/PrimitiveOperators.cpp.s
+
 src/yaml-helper.o: src/yaml-helper.cpp.o
 .PHONY : src/yaml-helper.o
 
@@ -240,6 +264,9 @@ help:
 	@echo "... src/Operators.o"
 	@echo "... src/Operators.i"
 	@echo "... src/Operators.s"
+	@echo "... src/PrimitiveOperators.o"
+	@echo "... src/PrimitiveOperators.i"
+	@echo "... src/PrimitiveOperators.s"
 	@echo "... src/yaml-helper.o"
 	@echo "... src/yaml-helper.i"
 	@echo "... src/yaml-helper.s"

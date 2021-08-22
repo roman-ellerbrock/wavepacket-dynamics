@@ -1,7 +1,7 @@
 
 
 Basis:
-  - dim: 20
+  - dim: 50
     type: HO
     freq: 1.
     x0: 0.
@@ -9,18 +9,26 @@ Basis:
     wfx0: 1.2
     wffreq: 1.5
 
-  - dim: 20
+  - dim: 50
     type: HO
     freq: 1.0
     x0: 0.
     coord: 1
-    wfx0: 0.1
-    wffreq: 0.9
+    wfx0: 2.1
+    wffreq: 0.8
 
 Hamiltonian:
   name: HO
 
 run:
-  job: Eigenstates
-  nstates: 3
-  krylov_size: 20
+#  job: Eigenstates
+#  nstates: 3
+#  krylov_size: 20
+
+  job: Integrate
+  krylov_size: 5
+  tmax: 20.
+  dt: 0.1
+  out: 0.1
+  accuracy: 1e-6
+

@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/WavepacketDynamics.dir/main.cpp.o"
   "CMakeFiles/WavepacketDynamics.dir/src/Operators.cpp.o"
+  "CMakeFiles/WavepacketDynamics.dir/src/PrimitiveOperators.cpp.o"
   "CMakeFiles/WavepacketDynamics.dir/src/yaml-helper.cpp.o"
   "CMakeFiles/WavepacketDynamics.dir/src/yaml-parser.cpp.o"
   "WavepacketDynamics"
