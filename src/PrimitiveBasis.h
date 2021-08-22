@@ -35,9 +35,6 @@ public:
 		}
 
 		initializeOperators();
-
-		/// perform DVR last!
-		buildDVR();
 	}
 
 	~PrimitiveBasis() = default;
@@ -57,11 +54,25 @@ public:
 			/// transform operators to DVR
 			kin_ = unitarySimilarityTrafo(kin_, trafo_);
 			p_   = unitarySimilarityTrafo(p_, trafo_);
-			x_   = unitarySimilarityTrafo(x_, trafo_);
+//			x_   = unitarySimilarityTrafo(x_, trafo_);
+			x_.zero();
+			for (size_t i = 0; i < x_.dim1(); ++i) {
+				x_(i, i) = grid_(i);
+			}
 
 		} else if (type_ == "FFT") {
-			cerr << "Not implemented, yet.\n";
-			exit(1);
+			double x1 = freq_;
+			x_ = x_FFT(dim_, x0_, x1);
+			p_ = p_FFT(dim_, x0_, x1);
+			kin_ = kin_FFT(dim_, x0_, x1);
+
+			auto spec = dvr_FFT(dim_, x0_, x1);
+			trafo_ = spec.first;
+			grid_ = spec.second;
+
+			/// transform kin and p; x is already in grid rep.
+			kin_ = unitarySimilarityTrafo(kin_, trafo_);
+			p_   = unitarySimilarityTrafo(p_, trafo_);
 		} else if (type_ == "NumberBasis") {
 			cerr << "Not implemented, yet.\n";
 			exit(1);
@@ -80,10 +91,14 @@ public:
 
 		for (int i = 0; i < dim_; i++)
 			grid_(i) += x0_;
+		grid_.print();
+		getchar();
 
 		kin_ = unitarySimilarityTrafo(kin_, trafo_);
 		p_   = unitarySimilarityTrafo(p_, trafo_);
 		x_   = unitarySimilarityTrafo(x_, trafo_);
+		x_.print();
+		getchar();
 	}
 
 	Matrixcd x_;

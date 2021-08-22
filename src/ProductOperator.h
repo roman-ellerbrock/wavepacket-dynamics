@@ -23,7 +23,7 @@ public:
 		emplace_back(op);
 	}
 
-	Wavefunction apply(const Wavefunction& Psi) const {
+	[[nodiscard]] Wavefunction apply(const Wavefunction& Psi) const {
 		Wavefunction pPsi(Psi);
 		for (const pair<Matrixcd, int>& op : (*this)) {
 			const Matrixcd& m = op.first;
@@ -43,7 +43,8 @@ public:
 		}
 	}
 
-
+	/// Potential energy surface (replace by class to allow memory initialization)
+	function<double(const Vectord& x)> V_;
 };
 
 

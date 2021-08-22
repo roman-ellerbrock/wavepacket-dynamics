@@ -25,14 +25,14 @@ Hamiltonian harmonic_osciallator(const Basis& basis) {
 		}
 
 		/// quartic Potential
-		{
-			ProductOperator P;
-			auto x2 = prim.x_ * prim.x_;
-			auto x4 = x2 * x2;
-			P.emplace_back(x4 , coord);
-			double coeff = 0.05;
-			H.emplace_back(coeff, P);
-		}
+//		{
+//			ProductOperator P;
+//			auto x2 = prim.x_ * prim.x_;
+//			auto x4 = x2 * x2;
+//			P.emplace_back(x4 , coord);
+//			double coeff = 0.01;
+//			H.emplace_back(coeff, P);
+//		}
 	}
 	return H;
 }

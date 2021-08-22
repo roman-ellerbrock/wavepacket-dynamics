@@ -52,7 +52,7 @@ void run(const string& filename) {
 
 	/// Create Hamiltonian
 	Node Hnode = read_key<Node>(input, "Hamiltonian");
-	string Hname = read_key<string>(Hnode, "name");
+	auto Hname = read_key<string>(Hnode, "name");
 	Hamiltonian H;
 	if (Hname == "HO") {
 		H = harmonic_osciallator(basis);

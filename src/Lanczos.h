@@ -106,7 +106,7 @@ public:
 	void integrate(Wavefunction& Psi, double& t, double& dt, double tmax,
 		double out, const Hamiltonian& H, const Basis& basis, size_t krylov_size) {
 		Wavefunction Psi_last = Psi;
-		bool movie = false;
+		bool movie = true;
 
 		size_t count = 0;
 		while (t + 1e-6 < tmax) {

@@ -12,7 +12,11 @@ Matrixcd p_HO(size_t dim, double freq);
 Matrixcd kin_HO(size_t dim, double freq);
 pair<Matrixcd, Vectord> dvr_HO(size_t dim, double freq, double x0);
 
-/// Equidistant Grid
+/// Equidistant Grid / FFT
+Matrixcd x_FFT(size_t dim, double x0, double x1);
+Matrixcd p_FFT(size_t dim, double x0, double x1);
+Matrixcd kin_FFT(size_t dim, double x0, double x1);
+pair<Matrixcd, Vectord> dvr_FFT(size_t dim, double x0, double x1);
 
 /// Electronic-/Number-basis
 
