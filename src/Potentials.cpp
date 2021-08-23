@@ -13,7 +13,7 @@ double V_HO(const Vectord& x) {
 
 double V_Eckhard(const Vectord& x) {
 	double omega = 1.;
-	double D = 0.1;
+	double D = 1.;
 	return D * exp(-omega*(x(0)*x(0)));
 }
 
