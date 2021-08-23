@@ -6,8 +6,8 @@ Basis:
     freq: 1.
     x0: 0.
     coord: 0
-    wfx0: 1.2
-    wfp0: 0.
+    wfx0: 0.
+    wfp0: 1.
     wffreq: 1.5
 
   - dim: 50
@@ -15,13 +15,12 @@ Basis:
     freq: 1.0
     x0: 0.
     coord: 1
-    wfx0: 2.1
-    wfp0: 0.
+    wfx0: 0.
+    wfp0: 1.
     wffreq: 0.8
 
 Hamiltonian:
-  name: KineticEnergy
-  V: HO
+  name: HO_pes
 
 run:
 #  job: Eigenstates

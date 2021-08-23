@@ -53,6 +53,18 @@ Hamiltonian kinetic_energy(const Basis& basis) {
 	return H;
 }
 
+Hamiltonian harmonic_osciallator_pes(const Basis& basis) {
+	/// T
+	Hamiltonian H = kinetic_energy(basis);
+
+	/// V_HO-PES
+	{
+		ProductOperator P;
+		P.V_ = V_HO;
+		H.emplace_back(1., P);
+	}
+	return H;
+}
 
 Hamiltonian tully_A(const Basis& basis) {
 	/**
@@ -72,7 +84,7 @@ Hamiltonian tully_A(const Basis& basis) {
 	size_t nstates = 2;
 	{
 		ProductOperator P;
-		P.emplace_back(element(nstates, 0, 0), 1);
+		P.emplace_back(element(nstates, 1, 1), 1);
 		P.V_ = V_tullyA_diabatic11;
 		H.emplace_back(1., P);
 	}

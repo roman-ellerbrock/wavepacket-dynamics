@@ -52,20 +52,12 @@ Hamiltonian read_hamiltonian(const Node& input, const Basis& basis) {
 		H = harmonic_osciallator(basis);
 	} else if (Hname == "KineticEnergy") {
 		H = kinetic_energy(basis);
+	} else if (Hname == "HO_pes") {
+		H = harmonic_osciallator_pes(basis);
+	} else if (Hname == "tullyA") {
+		H = tully_A(basis);
 	} else {
 		cerr << "wrong Hamiltonian name.\n";
-		exit(3);
-	}
-
-	auto Vname = read_key<string>(Hnode, "V");
-	if (Vname == "HO") {
-		ProductOperator V;
-		V.V_ = V_HO;
-		H.emplace_back(1., V);
-	} else if (Vname == "none") {
-		/// do nothing
-	} else {
-		cerr << "Error: wrong PES name.\n";
 		exit(3);
 	}
 

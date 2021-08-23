@@ -11,6 +11,10 @@
 #include "PrimitiveOperators.h"
 #include "Util/QMConstants.h"
 
+/**
+ * \class PrimitiveBasis
+ * \brief This manages the 1D basis information. It creates operator representations and initial wave packets.
+ */
 class PrimitiveBasis {
 public:
 	explicit PrimitiveBasis(const YAML::Node& node) {
@@ -24,14 +28,17 @@ public:
 			wffreq_ = read_key<double>(node, "wffreq");
 			wfx0_ = read_key<double>(node, "wfx0");
 			wfp0_ = read_key<double>(node, "wfp0");
+
 		} else if (type_ == "NumberBasis") {
 			wffreq_ = read_key<double>(node, "theta");
+
 		} else if (type_ == "FFT") {
 			x0_ = read_key<double>(node, "x0");
 			x1_ = read_key<double>(node, "x1");
 			wffreq_ = read_key<double>(node, "wffreq");
 			wfx0_ = read_key<double>(node, "wfx0");
 			wfp0_ = read_key<double>(node, "wfp0");
+
 		} else {
 			cerr << "Error: unknown basis type. Type was: " << type_ << endl;
 			exit(3);
@@ -76,8 +83,10 @@ public:
 
 			freq_ = -1000.;
 		} else if (type_ == "NumberBasis") {
-			cerr << "Not implemented, yet.\n";
-			exit(1);
+			grid_ = Vectord(dim_);
+			for (size_t i = 0; i < dim_; ++i) {
+				grid_(i) = i;
+			}
 		} else {
 			cerr << "Error: unknown basis type. Type was: " << type_ << endl;
 			exit(3);
@@ -100,7 +109,7 @@ public:
 		} else {
 			for (size_t i = 0; i < dim_; ++i) {
 				/// gauss wavepacket with momentum wfp0 located at wfx0
-				psi(i) = exp(-QM::im * wfp0_) * exp(-0.5 * wffreq_ * (pow(grid_(i) - wfx0_, 2)));
+				psi(i) = exp(QM::im * wfp0_*grid_(i)) * exp(-0.5 * wffreq_ * (pow(grid_(i) - wfx0_, 2)));
 			}
 			normalize(psi);
 		}

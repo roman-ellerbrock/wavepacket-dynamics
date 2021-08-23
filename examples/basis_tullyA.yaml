@@ -1,23 +1,22 @@
 
 
 Basis:
-  - dim: 50
+  - dim: 400
     type: FFT
-    x0: -10.
-    x1: 10.
+    x0: -30.
+    x1: 30.
     coord: 0
-    wfx0: 1.2
-    wfp0: 1.
-    wffreq: 1.5
+    wfx0: -10.
+    wfp0: 10.
+    wffreq: 10.
 
   - dim: 2
     type: NumberBasis
     coord: 1
-    freq: 0.
+    theta: 0.
 
 Hamiltonian:
-  name: HO
-  V: none
+  name: tullyA
 
 run:
 #  job: Eigenstates
@@ -26,8 +25,8 @@ run:
 
   job: Integrate
   krylov_size: 10
-  tmax: 20.
-  dt: 0.1
-  out: 0.1
+  tmax: 2.
+  dt: 0.001
+  out: 0.05
   accuracy: 1e-6
 

@@ -154,8 +154,6 @@ pair<Matrixcd, Vectord> dvr_FFT(size_t dim, double x0, double x1) {
 	Vectord x = xgrid_FFT(dim, x0, x1);
 	Vectord p = pgrid_FFT(dim, x0, x1);
 
-	cout << "x:\n"; x.print();
-	cout << "p:\n"; p.print();
 
 	Matrixcd U(dim, dim);
 	for (int i = 0; i < dim; ++i) {

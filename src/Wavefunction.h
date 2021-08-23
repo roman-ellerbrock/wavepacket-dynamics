@@ -12,7 +12,7 @@ public:
 
 	Wavefunction() = default;
 
-	Wavefunction(const Basis& basis)
+	explicit Wavefunction(const Basis& basis)
 		: Tensorcd(basis.shape_) {}
 
 	void occupy(const Basis& basis) {
@@ -24,18 +24,12 @@ public:
 			A[I] = 1.;
 		}
 
-		/// Create gauss packet in every dimension
-		for (const auto& coord : basis) {
-			/// For each dimension: loop through coefficients and multiply with exp(-wx^2)
-			size_t k = coord.coord_;
-			const Vectord& x = coord.grid_;
-			const double x0 = coord.wfx0_;
-			const double freq = coord.wffreq_;
-
+		for (const auto& prim : basis) {
+			/// Get 1D wavefunction and create a product
+			auto psi1D = prim.initial1DWavefunction();
 			for (size_t I = 0; I < shape.totalDimension(); ++I) {
 				auto idx = indexMapping(I, shape);
-				double fa = exp(-0.5 * freq * (pow(x[idx[k]] - x0, 2)));
-				A[I] *= fa;
+				A[I] *= psi1D(idx[prim.coord_]);
 			}
 		}
 		normalize();
