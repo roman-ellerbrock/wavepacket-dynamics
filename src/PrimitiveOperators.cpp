@@ -37,6 +37,9 @@ Matrixcd kin_HO(size_t dim, double freq) {
 pair<Matrixcd, Vectord> dvr_HO(size_t dim, double freq, double x0) {
 	/// Build DVR from diagonalizing X matrix
 	/// x = U * x_ev * U^dagger
+	Matrixcd U(dim, dim);
+	Vectord grid(dim);
+	return pair<Matrixcd, Vectord>(U, grid);
 }
 
 /// FFT

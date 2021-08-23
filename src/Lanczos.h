@@ -7,6 +7,7 @@
 #include "Wavefunction.h"
 #include "Hamiltonian.h"
 #include "Util/QMConstants.h"
+#include <iomanip>
 
 /**
  * \class Lanczos
@@ -182,10 +183,10 @@ private:
 			timeStep(Psi, t, dt);
 
 			/// minimal output
-//			auto pres = cout.precision();
-//			cout << setprecision(2) << fixed;
+			auto pres = cout.precision();
+			cout << setprecision(2) << fixed;
 			cout << "time: " << t << " / " << tmax << " |Psi|^2  = " << Psi.normalize() << endl;
-//			cout << setprecision(pres);
+			cout << setprecision(pres);
 		}
 	}
 };
