@@ -6,27 +6,25 @@ Basis:
     x0: -30.
     x1: 30.
     coord: 0
+
     wfx0: -10.
     wfp0: 10.
     wffreq: 10.
 
+# electronic state basis (2 states)
   - dim: 2
     type: NumberBasis
     coord: 1
-    theta: 0.
+    theta: 0. # initial state will be set to (cos(theta), sin(theta))
 
 Hamiltonian:
   name: tullyA
 
 run:
-#  job: Eigenstates
-#  nstates: 3
-#  krylov_size: 20
-
   job: Integrate
   krylov_size: 10
   tmax: 2.
-  dt: 0.001
+  dt: 0.01
   out: 0.05
   accuracy: 1e-6
 

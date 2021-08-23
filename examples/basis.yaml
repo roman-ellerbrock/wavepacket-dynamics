@@ -21,13 +21,8 @@ Basis:
 
 Hamiltonian:
   name: HO
-  V: none
 
 run:
-#  job: Eigenstates
-#  nstates: 3
-#  krylov_size: 20
-
   job: Integrate
   krylov_size: 10
   tmax: 20.

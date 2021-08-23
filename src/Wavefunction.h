@@ -17,7 +17,7 @@ public:
 
 	void occupy(const Basis& basis) {
 		Tensorcd& A = *this;
-		const TensorShape& shape = A.shape_;
+		const TensorShape& shape = A.shape();
 
 		/// Create even superposition
 		for (size_t I = 0; I < shape.totalDimension(); ++I) {

@@ -50,7 +50,7 @@ public:
 	 */
 	void applyPotential(Wavefunction& Psi, const Basis& basis) const {
 		if (!V_) { return; }
-		const TensorShape& shape = Psi.shape_;
+		const TensorShape& shape = Psi.shape();
 		for (size_t I = 0; I < shape.totalDimension(); ++I) {
 			auto idx = indexMapping(I, shape);
 			auto x = gridPoint(idx, basis);
@@ -66,7 +66,7 @@ public:
 			const int k = op.second; /// coordinate the operator is applied to
 
 			/// Check matrix Dimension to give error message
-			if (m.dim1() != pPsi.shape_[k]) {
+			if (m.dim1() != pPsi.shape()[k]) {
 				cerr << "Error: matrix dimension does not fit tensors dimension.\n";
 				exit(1);
 			}

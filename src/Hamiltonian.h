@@ -32,7 +32,7 @@ public:
 	 * @return HPsi
 	 */
 	Wavefunction apply(const Wavefunction& Psi, const Basis& basis) const{
-		Wavefunction HPsi(Psi.shape_);
+		Wavefunction HPsi(Psi.shape());
 		/// Loop over all summands in the wavefunction and apply them
 		for (const pair<double, ProductOperator>& pa : *this) {
 			const double c = pa.first;

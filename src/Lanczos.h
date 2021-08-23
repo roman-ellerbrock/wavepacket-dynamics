@@ -20,7 +20,7 @@ public:
 	}
 	~Lanczos() = default;
 	void initialize(const Wavefunction& Psi, size_t krylov_size) {
-		krylovSpace_ = vector<Wavefunction>(krylov_size, Wavefunction(Psi.shape_));
+		krylovSpace_ = vector<Wavefunction>(krylov_size, Wavefunction(Psi.shape()));
 	}
 
 	/**
