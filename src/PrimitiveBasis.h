@@ -35,17 +35,14 @@ public:
 			wffreq_ = read_key<double>(node, "wffreq");
 			wfx0_ = read_key<double>(node, "wfx0");
 			wfp0_ = read_key<double>(node, "wfp0");
-
 		} else if (type_ == "NumberBasis") {
 			wffreq_ = read_key<double>(node, "theta");
-
 		} else if (type_ == "FFT") {
 			x0_ = read_key<double>(node, "x0");
 			x1_ = read_key<double>(node, "x1");
 			wffreq_ = read_key<double>(node, "wffreq");
 			wfx0_ = read_key<double>(node, "wfx0");
 			wfp0_ = read_key<double>(node, "wfp0");
-
 		} else {
 			cerr << "Error: unknown basis type. Type was: " << type_ << endl;
 			exit(3);
@@ -66,6 +63,14 @@ public:
 			kin_ = kin_HO(dim_, freq_);
 			x_ = x_HO(dim_, freq_);
 			p_ = p_HO(dim_, freq_);
+
+			cout << "x = " << endl;
+			x_.print();
+			cout << "p = " << endl;
+			p_.print();
+			cout << "kin = " << endl;
+			kin_.print();
+			exit(0);
 
 			/// calculate DVR
 			auto spec = dvr_HO(dim_, freq_, x0_);
@@ -124,7 +129,7 @@ public:
 		} else {
 			for (size_t i = 0; i < dim_; ++i) {
 				/// gauss wavepacket with momentum wfp0 located at wfx0
-				psi(i) = exp(QM::im * wfp0_*grid_(i)) * exp(-0.5 * wffreq_ * (pow(grid_(i) - wfx0_, 2)));
+				psi(i) = exp(QM::im * wfp0_ * grid_(i)) * exp(-0.5 * wffreq_ * (pow(grid_(i) - wfx0_, 2)));
 			}
 			normalize(psi);
 		}
