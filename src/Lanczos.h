@@ -36,7 +36,9 @@ public:
 		const Basis& basis, size_t krylov_size) {
 		/// { |Psi>, H|Psi>, H^2|Psi>, ..., H^n|Psi> }
 
-		krylovSpace_ = {Psi};
+		if (krylovSpace_.size() != krylov_size) { initialize(Psi, krylov_size); }
+
+		krylovSpace_[0] = Psi;
 		vector<double> beta;
 		vector<double> alpha;
 
@@ -51,7 +53,7 @@ public:
 		/// remaining steps
 		for (size_t l = 1; l < krylov_size; ++l) {
 			beta.push_back(Psi.normalize());
-			krylovSpace_.push_back(Psi);
+			krylovSpace_[l] = Psi;
 
 			HPsi = H.apply(Psi, basis);
 			alphamat = Psi.dotProduct(HPsi);

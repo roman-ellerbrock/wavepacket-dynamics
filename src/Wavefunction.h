@@ -35,6 +35,14 @@ public:
 		normalize();
 	}
 
+	void plot1D(const Basis& basis, size_t k1 = 0, ostream& os = cout) {
+		const PrimitiveBasis& prim = basis.front();
+		const Tensorcd& A = *this;
+		for (size_t i = 0; i < prim.dim_; ++i) {
+			os << prim.grid_(i) << " " << pow(abs(A[i]), 2) << endl;
+		}
+	}
+
 	void plot2D(const Basis& basis, size_t k1, size_t k2, ostream& os = cout) {
 		/**
 		 * Rationale:
@@ -58,6 +66,18 @@ public:
 				os << x1[i1] << " " << x2[i2] << " " << d(i1, i2) << endl;
 			}
 			os << endl;
+		}
+	}
+
+	void plot(const Basis& basis, const vector<size_t>& coords, ostream& os = cout) {
+		if (coords.empty()) {
+			cerr << "Error: cannot plot wavefunction for empty coordinate vector.\n";
+			exit(1);
+		}
+		if (coords.size() == 1) {
+			plot1D(basis, coords.front(), os);
+		} else {
+			plot2D(basis, coords[0], coords[1], os);
 		}
 	}
 

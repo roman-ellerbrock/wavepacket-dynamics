@@ -12,24 +12,32 @@
 
 using namespace YAML;
 
+/**
+ * \brief Execute a job (integrate in time or calculate eigenstates)
+ * @param Psi Initial wavefunction
+ * @param H Hamiltonian of the system
+ * @param node yaml node that describes the job
+ * @param basis Basis of the wavefunction
+ */
 void execute_job(Wavefunction& Psi, const Hamiltonian& H,
 	const Node& node, const Basis& basis) {
 
+	/// Read the type of job
 	auto job = read_key<string>(node, "job");
 
 	if (job == "Eigenstates") {
+		/// Calculate Eigenstates by running a single Lanczos
 		cout << "Running Eigenstate calculation...\n";
 		auto nkrylov = read_key<size_t>(node, "krylov_size");
-
 		Lanczos lan;
 		lan.calculate(Psi, H, basis, nkrylov);
 		lan.print();
 	} else if (job == "Integrate") {
+		/// Integrate in time using a short-iterative lanczos
 		auto nkrylov = read_key<size_t>(node, "krylov_size");
 		auto dt = read_key<double>(node, "dt");
 		auto tmax = read_key<double>(node, "tmax");
 		auto out = read_key<double>(node, "out");
-		auto accuracy = read_key<double>(node, "accuracy");
 		Lanczos lan;
 		double t = 0;
 		lan.integrate(Psi, t, dt, tmax, out, H, basis, nkrylov);
@@ -41,7 +49,12 @@ void execute_job(Wavefunction& Psi, const Hamiltonian& H,
 
 Hamiltonian read_hamiltonian(const Node& input, const Basis& basis) {
 	/**
-	 * Read Hamiltonian from yaml node.
+	 * Rationale:
+	 * - Read Hamiltonian from yaml node.
+	 * - The Hamiltonians are implemented in Operators.cpp with PESs from Potentials.cpp
+	 * - If you want to add your own Hamiltonian, just implement it in Operators.cpp/Potentials.cpp
+	 *   and add them to the if/else below.
+	 * - Feel free to play around by writing new Hamitonians
 	 */
 
 	Node Hnode = read_key<Node>(input, "Hamiltonian");
@@ -68,11 +81,11 @@ void run(const string& filename) {
 	/// Load input
 	Node input = LoadFile(filename);
 
-	/// Read basis from corresponding key
+	/// Read Basis from corresponding key
 	Node basis_node = read_key<Node>(input, "Basis");
 	Basis basis(basis_node);
 
-	/// Create Wavefunction
+	/// Create Wavefunction and occupy
 	Wavefunction Psi(basis);
 	Psi.occupy(basis);
 

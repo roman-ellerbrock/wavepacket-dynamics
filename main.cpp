@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
 		exit(1);
 	}
 
-	/// Call run from yaml-parser.cpp
+	/// call run, found in src/yaml-parser.cpp
 	run(filename);
 
 	return 0;
