@@ -7,6 +7,7 @@
 #include "Wavefunction.h"
 #include "Hamiltonian.h"
 #include "Util/QMConstants.h"
+#include <iomanip>
 
 /**
  * \class Lanczos
