@@ -67,18 +67,19 @@ public:
 			x_ = x_HO(dim_, freq_);
 			p_ = p_HO(dim_, freq_);
 
+			/// Your code comes here
+			/// a.) build trafo_ and grid_ using dvr_HO ind PrimitiveOperators.cpp
 			/// calculate DVR
 			auto spec = dvr_HO(dim_, freq_, x0_);
 			trafo_ = spec.first;
 			grid_ = spec.second;
 
+			/// b.) transform x, p and kin to DVR
 			/// transform operators to DVR
-			kin_ = unitarySimilarityTrafo(kin_, trafo_);
-			p_ = unitarySimilarityTrafo(p_, trafo_);
-			x_.zero();
-			for (size_t i = 0; i < x_.dim1(); ++i) {
-				x_(i, i) = grid_(i);
-			}
+
+			/// c.) build the Hamiltonian and end program
+
+			exit(0);
 		} else if (type_ == "FFT") {
 			/// Build x, p, kin
 			x_ = x_FFT(dim_, x0_, x1_);

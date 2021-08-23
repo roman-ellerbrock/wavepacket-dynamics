@@ -17,6 +17,11 @@ double V_Eckhard(const Vectord& x) {
 	return D * exp(-omega*(x(0)*x(0)));
 }
 
+/// Morse-potential
+double V_morsePotential(const Vectord& x) {
+	return 0.;
+}
+
 /// Tully Model Potential from Sec. IV A in 1990 paper
 
 double V_tullyA_diabatic11(const Vectord& x) {

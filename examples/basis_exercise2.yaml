@@ -1,0 +1,19 @@
+
+
+Basis:
+  - dim: 20
+    type: HO
+    freq: 1.5
+    x0: 0.
+    coord: 0
+    wfx0: 1.2
+    wfp0: 0.
+    wffreq: 1.5
+
+Hamiltonian:
+  name: HO
+
+run:
+  job: Eigenstates
+  krylov_size: 10
+

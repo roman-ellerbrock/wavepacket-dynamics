@@ -9,6 +9,9 @@
 /// Harmonic Oscillator potential as PES
 double V_HO(const Vectord& x);
 
+/// Morse-potential
+double V_morsePotential(const Vectord& x);
+
 /// Eckhard Barrier
 double V_Eckhard(const Vectord& x);
 
