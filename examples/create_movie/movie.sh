@@ -3,5 +3,5 @@ rm Psi.*.dat
 rm frame.*.png
 cp ../Psi.*.dat .
 gnuplot frame.plt
-convert -delay 8 *.png out.gif
+convert -delay 10 *.png out.gif
 

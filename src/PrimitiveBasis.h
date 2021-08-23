@@ -9,6 +9,7 @@
 #include "Core/Tensor.h"
 #include "Core/Matrix.h"
 #include "PrimitiveOperators.h"
+#include "Util/QMConstants.h"
 
 class PrimitiveBasis {
 public:
@@ -22,13 +23,15 @@ public:
 			x0_ = read_key<double>(node, "x0");
 			wffreq_ = read_key<double>(node, "wffreq");
 			wfx0_ = read_key<double>(node, "wfx0");
+			wfp0_ = read_key<double>(node, "wfp0");
 		} else if (type_ == "NumberBasis") {
 			wffreq_ = read_key<double>(node, "theta");
 		} else if (type_ == "FFT") {
 			x0_ = read_key<double>(node, "x0");
-			freq_ = read_key<double>(node, "x1");
+			x1_ = read_key<double>(node, "x1");
 			wffreq_ = read_key<double>(node, "wffreq");
 			wfx0_ = read_key<double>(node, "wfx0");
+			wfp0_ = read_key<double>(node, "wfp0");
 		} else {
 			cerr << "Error: unknown basis type. Type was: " << type_ << endl;
 			exit(3);
@@ -53,26 +56,25 @@ public:
 
 			/// transform operators to DVR
 			kin_ = unitarySimilarityTrafo(kin_, trafo_);
-			p_   = unitarySimilarityTrafo(p_, trafo_);
-//			x_   = unitarySimilarityTrafo(x_, trafo_);
+			p_ = unitarySimilarityTrafo(p_, trafo_);
 			x_.zero();
 			for (size_t i = 0; i < x_.dim1(); ++i) {
 				x_(i, i) = grid_(i);
 			}
-
 		} else if (type_ == "FFT") {
-			double x1 = freq_;
-			x_ = x_FFT(dim_, x0_, x1);
-			p_ = p_FFT(dim_, x0_, x1);
-			kin_ = kin_FFT(dim_, x0_, x1);
+			x_ = x_FFT(dim_, x0_, x1_);
+			p_ = p_FFT(dim_, x0_, x1_);
+			kin_ = kin_FFT(dim_, x0_, x1_);
 
-			auto spec = dvr_FFT(dim_, x0_, x1);
+			auto spec = dvr_FFT(dim_, x0_, x1_);
 			trafo_ = spec.first;
 			grid_ = spec.second;
 
 			/// transform kin and p; x is already in grid rep.
 			kin_ = unitarySimilarityTrafo(kin_, trafo_);
-			p_   = unitarySimilarityTrafo(p_, trafo_);
+			p_ = unitarySimilarityTrafo(p_, trafo_);
+
+			freq_ = -1000.;
 		} else if (type_ == "NumberBasis") {
 			cerr << "Not implemented, yet.\n";
 			exit(1);
@@ -82,25 +84,30 @@ public:
 		}
 	}
 
-	void buildDVR() {
-		/// Build DVR from diagonalizing X matrix
-		/// x = U * x_ev * U^dagger
-		auto spec = diagonalize(x_);
-		grid_ = spec.second;
-		trafo_ = spec.first;
-
-		for (int i = 0; i < dim_; i++)
-			grid_(i) += x0_;
-		grid_.print();
-		getchar();
-
-		kin_ = unitarySimilarityTrafo(kin_, trafo_);
-		p_   = unitarySimilarityTrafo(p_, trafo_);
-		x_   = unitarySimilarityTrafo(x_, trafo_);
-		x_.print();
-		getchar();
+	/**
+	 * \brief Create a 1D initial wavefunction. Is used to create multidimensional wavefunction
+	 * @return Vector(dim) with the 1D wavefunction in DVR (HO, FFT) or in FBR (Number basis)
+	 */
+	[[nodiscard]] Vectorcd initial1DWavefunction() const {
+		Vectorcd psi(dim_);
+		if (type_ == "NumberBasis") {
+			if (dim_ == 1) {
+				psi(0) = 1.;
+			} else {
+				psi(0) = cos(wffreq_);
+				psi(1) = sin(wffreq_);
+			}
+		} else {
+			for (size_t i = 0; i < dim_; ++i) {
+				/// gauss wavepacket with momentum wfp0 located at wfx0
+				psi(i) = exp(-QM::im * wfp0_) * exp(-0.5 * wffreq_ * (pow(grid_(i) - wfx0_, 2)));
+			}
+			normalize(psi);
+		}
+		return psi;
 	}
 
+	/// Matrix representations of operators
 	Matrixcd x_;
 	Matrixcd p_;
 	Matrixcd kin_;
@@ -109,15 +116,21 @@ public:
 	Vectord grid_;
 	Matrixcd trafo_;
 
-	/// basis parameters
+	/// basis type
 	string type_; /// HO, FFT, Legendre, ...
+
+	/// basis parameters
+	/// Note: Here inheritance for different types would be cleaner but I want to avoid creating many classes.
 	int dim_;
 	int coord_;
-	double freq_;
+	double freq_; /// freq has different meanings depending on type
 	double x0_;
+	double x1_; /// only exists for FFT
+
 	/// Initial wavepacket parameters
 	double wffreq_;
 	double wfx0_;
+	double wfp0_;
 };
 
 

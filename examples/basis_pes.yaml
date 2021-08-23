@@ -20,8 +20,8 @@ Basis:
     wffreq: 0.8
 
 Hamiltonian:
-  name: HO
-  V: none
+  name: KineticEnergy
+  V: HO
 
 run:
 #  job: Eigenstates

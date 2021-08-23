@@ -90,13 +90,37 @@ pair<Matrixcd, Vectord> dvr_HO(size_t dim, double freq, double x0) {
  *   Here, we build x- and p- as matrices. Hence, the FFT basis has the same
  *   implementation as the orthogonal basis functions.
  */
-Matrixcd x_FFT(size_t dim, double x0, double x1) {
+Vectord xgrid_FFT(size_t dim, double x0, double x1) {
 	auto N = (double) dim;
 	double deltaX = (x1 - x0) / (N - 1);
 
+	Vectord x(dim);
+	for (size_t i = 0; i < dim; ++i) {
+		x(i) = x0 + i * deltaX;
+	}
+	return x;
+}
+
+Vectord pgrid_FFT(size_t dim, double x0, double x1) {
+	auto N = (double) dim;
+	double deltaX = (x1 - x0) / (N - 1);
+	double deltaP = QM::two_pi / (deltaX * N);
+	double lenP = (N - 1) * deltaP;
+	double p0 = -lenP / 2.;
+
+	Vectord p(dim);
+	for (size_t i = 0; i < dim; ++i) {
+		p(i) = p0 + i * deltaP;
+	}
+	return p;
+}
+
+Matrixcd x_FFT(size_t dim, double x0, double x1) {
+	Vectord xgrid = xgrid_FFT(dim, x0, x1);
+
 	Matrixcd x(dim, dim);
 	for (int i = 0; i < dim; ++i) {
-		x(i, i) = x0 + i * deltaX;
+		x(i, i) = xgrid(i);
 	}
 	return x;
 }
@@ -108,53 +132,51 @@ Matrixcd p_FFT(size_t dim, double x0, double x1) {
 	 *   deltaX determines width of the p-grid and (x1-x0) & dim determines
 	 *   deltaP.
 	 */
-	auto N = (double) dim;
-	double deltaX = (x1 - x0) / (N - 1);
-	double lenP = QM::two_pi / deltaX;
-	double p0 = - 0.5 * lenP;
-	double deltaP = lenP / (N - 1);
-
+	Vectord pgrid = pgrid_FFT(dim, x0, x1);
 	Matrixcd p(dim, dim);
 	for (int i = 0; i < dim; ++i) {
-		p(i, i) = p0 + i * deltaP;
+		p(i, i) = pgrid(i);
 	}
-	p *= QM::im;
 	return p;
 }
 
 Matrixcd kin_FFT(size_t dim, double x0, double x1) {
-	auto N = (double) dim;
-	double deltaX = (x1 - x0) / (N - 1);
-	double lenP = QM::two_pi / deltaX;
-	double p0 = - 0.5 * lenP;
-	double deltaP = lenP / (N - 1);
-
+	Vectord pgrid = pgrid_FFT(dim, x0, x1);
 
 	Matrixcd kin(dim, dim);
 	for (int i = 0; i < dim; ++i) {
-		double p = p0 + i * deltaP;
-		kin(i, i) = - 0.5 * p * p;
+		kin(i, i) = 0.5 * pgrid(i) * pgrid(i);
 	}
 	return kin;
 }
 
 pair<Matrixcd, Vectord> dvr_FFT(size_t dim, double x0, double x1) {
-	auto N = (double) dim;
-	double deltaX = (x1 - x0) / (N - 1);
-	double lenP = QM::two_pi / deltaX;
-	double p0 = - 0.5 * lenP;
-	double deltaP = lenP / (N - 1);
+	Vectord x = xgrid_FFT(dim, x0, x1);
+	Vectord p = pgrid_FFT(dim, x0, x1);
+
+	cout << "x:\n"; x.print();
+	cout << "p:\n"; p.print();
 
 	Matrixcd U(dim, dim);
-	Vectord grid(dim);
 	for (int i = 0; i < dim; ++i) {
-		double x = x0 + i * deltaX;
-		grid(i) = x;
 		for (int j = 0; j < dim; ++j) {
-			U(j, i) = exp(-QM::im * QM::two_pi * (double) i * (double) j / N) / sqrt(N);
+			U(j, i) = exp(-QM::im * (x(i) - x0) * p(j)) / sqrt((double) dim);
 		}
 	}
-	return {U, grid};
+	return {U, x};
 }
 
-/// Equidistant Grid
+/// Number Basis
+/**
+ * Rationale:
+ * - this is a logic basis set for creation- annihilation basis |n>.
+ * - no representation for operator x and p.
+ * - can be used for electronic state basis, spin basis, and many more.
+ */
+Matrixcd element(size_t dim, size_t n, size_t m) {
+	/// Matrix-representation for |m><n|
+	Matrixcd P(dim, dim);
+	P(n, m) = 1.;
+	return P;
+}
+

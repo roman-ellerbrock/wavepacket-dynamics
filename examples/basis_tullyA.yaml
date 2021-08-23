@@ -2,22 +2,18 @@
 
 Basis:
   - dim: 50
-    type: HO
-    freq: 1.
-    x0: 0.
+    type: FFT
+    x0: -10.
+    x1: 10.
     coord: 0
     wfx0: 1.2
-    wfp0: 0.
+    wfp0: 1.
     wffreq: 1.5
 
-  - dim: 50
-    type: HO
-    freq: 1.0
-    x0: 0.
+  - dim: 2
+    type: NumberBasis
     coord: 1
-    wfx0: 2.1
-    wfp0: 0.
-    wffreq: 0.8
+    freq: 0.
 
 Hamiltonian:
   name: HO

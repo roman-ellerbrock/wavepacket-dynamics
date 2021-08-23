@@ -8,6 +8,7 @@
 #include "Lanczos.h"
 #include "Hamiltonian.h"
 #include "Operators.h"
+#include "Potentials.h"
 
 using namespace YAML;
 
@@ -38,6 +39,39 @@ void execute_job(Wavefunction& Psi, const Hamiltonian& H,
 	}
 }
 
+Hamiltonian read_hamiltonian(const Node& input, const Basis& basis) {
+	/**
+	 * Read Hamiltonian from yaml node.
+	 */
+
+	Node Hnode = read_key<Node>(input, "Hamiltonian");
+	auto Hname = read_key<string>(Hnode, "name");
+
+	Hamiltonian H;
+	if (Hname == "HO") {
+		H = harmonic_osciallator(basis);
+	} else if (Hname == "KineticEnergy") {
+		H = kinetic_energy(basis);
+	} else {
+		cerr << "wrong Hamiltonian name.\n";
+		exit(3);
+	}
+
+	auto Vname = read_key<string>(Hnode, "V");
+	if (Vname == "HO") {
+		ProductOperator V;
+		V.V_ = V_HO;
+		H.emplace_back(1., V);
+	} else if (Vname == "none") {
+		/// do nothing
+	} else {
+		cerr << "Error: wrong PES name.\n";
+		exit(3);
+	}
+
+	return H;
+}
+
 void run(const string& filename) {
 	/// Load input
 	Node input = LoadFile(filename);
@@ -51,17 +85,7 @@ void run(const string& filename) {
 	Psi.occupy(basis);
 
 	/// Create Hamiltonian
-	Node Hnode = read_key<Node>(input, "Hamiltonian");
-	auto Hname = read_key<string>(Hnode, "name");
-	Hamiltonian H;
-	if (Hname == "HO") {
-		H = harmonic_osciallator(basis);
-	} else if (Hname == "Dissociation") {
-
-	} else {
-		cerr << "wrong Hamiltonian name.\n";
-		exit(3);
-	}
+	Hamiltonian H = read_hamiltonian(input, basis);
 
 	/// Read what jobs to perform
 	Node run_node = read_key<Node>(input, "run");

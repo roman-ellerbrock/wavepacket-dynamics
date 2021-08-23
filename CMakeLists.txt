@@ -27,6 +27,8 @@ target_sources(WavepacketDynamics PUBLIC
         src/Wavefunction.h
         src/Operators.cpp
         src/Operators.h
+        src/Potentials.cpp
+        src/Potentials.h
         src/PrimitiveOperators.cpp
         src/PrimitiveOperators.h
 

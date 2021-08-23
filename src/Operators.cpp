@@ -3,6 +3,7 @@
 //
 
 #include "Operators.h"
+#include "Potentials.h"
 
 Hamiltonian harmonic_osciallator(const Basis& basis) {
 	Hamiltonian H;
@@ -20,8 +21,7 @@ Hamiltonian harmonic_osciallator(const Basis& basis) {
 		{
 			ProductOperator P;
 			P.emplace_back(prim.x_ * prim.x_, coord);
-			double coeff = 0.5 * prim.freq_ * prim.freq_;
-			H.emplace_back(coeff, P);
+			H.emplace_back(0.5, P);
 		}
 
 		/// quartic Potential
@@ -34,5 +34,63 @@ Hamiltonian harmonic_osciallator(const Basis& basis) {
 //			H.emplace_back(coeff, P);
 //		}
 	}
+	return H;
+}
+
+Hamiltonian kinetic_energy(const Basis& basis) {
+	Hamiltonian H;
+	for (const PrimitiveBasis& prim : basis) {
+		size_t coord = prim.coord_;
+
+		/// Kinetic Energy
+		{
+			ProductOperator P;
+			P.emplace_back(prim.kin_, coord);
+			H.emplace_back(1., P);
+		}
+	}
+
+	return H;
+}
+
+
+Hamiltonian tully_A(const Basis& basis) {
+	/**
+	 * Rationale:
+	 * - from Sec. IV.) A of Ref: http://dx.doi.org/10.1063/1.459170
+	 * - use input: Coordinate 1: FFT grid, Coordinate 2: number basis
+	 */
+
+	/// H = T + |0><0|*V_11 + (|0><1|+|1><0|)*V12 + |1><1|*V_22
+	Hamiltonian H;
+	{ /// kinetic energy for FFT
+		ProductOperator P;
+		P.emplace_back(basis[0].kin_, 0);
+		H.emplace_back(1., P);
+	}
+
+	size_t nstates = 2;
+	{
+		ProductOperator P;
+		P.emplace_back(element(nstates, 0, 0), 1);
+		P.V_ = V_tullyA_diabatic11;
+		H.emplace_back(1., P);
+	}
+
+	{
+		Matrixcd proj = element(nstates, 0, 1) + element(nstates, 1, 0);
+		ProductOperator P;
+		P.emplace_back(proj, 1);
+		P.V_ = V_tullyA_diabatic12;
+		H.emplace_back(1., P);
+	}
+
+	{
+		ProductOperator P;
+		P.emplace_back(element(nstates, 1, 1), 1);
+		P.V_ = V_tullyA_diabatic22;
+		H.emplace_back(1., P);
+	}
+
 	return H;
 }

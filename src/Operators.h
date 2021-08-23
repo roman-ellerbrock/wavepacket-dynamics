@@ -9,4 +9,6 @@
 
 Hamiltonian harmonic_osciallator(const Basis& basis);
 
+Hamiltonian kinetic_energy(const Basis& basis);
+
 #endif //OPERATORS_H
