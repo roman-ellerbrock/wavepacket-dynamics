@@ -8,6 +8,7 @@
 
 double V_HO(const Vectord& x);
 
+/// Model Potential from Sec. IV A in Tully 1990
 double V_tullyA_diabatic11(const Vectord& x);
 double V_tullyA_diabatic12(const Vectord& x);
 double V_tullyA_diabatic22(const Vectord& x);

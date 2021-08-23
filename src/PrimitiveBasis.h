@@ -17,6 +17,13 @@
  */
 class PrimitiveBasis {
 public:
+	/**
+	 * \brief Initialize the parameters in the Primitive basis from a yaml-node.
+	 * @param node
+	 * Note: not all variables are actively used by all basis types. It would be
+	 *       safer to inherit from this class to specify the type of basis.
+	 *       Since this would result in various classes, I avoided the inheritance here.
+	 */
 	explicit PrimitiveBasis(const YAML::Node& node) {
 		dim_ = read_key<int>(node, "dim");
 		coord_ = read_key<int>(node, "coord");
@@ -49,6 +56,10 @@ public:
 
 	~PrimitiveBasis() = default;
 
+	/**
+	 * \brief Initialize the operators that are attached to the basis and
+	 * transform every operator to grid representation (DVR) if it exists.
+	 */
 	void initializeOperators() {
 		if (type_ == "HO") {
 			/// build operators in FBR
@@ -69,10 +80,12 @@ public:
 				x_(i, i) = grid_(i);
 			}
 		} else if (type_ == "FFT") {
+			/// Build x, p, kin
 			x_ = x_FFT(dim_, x0_, x1_);
 			p_ = p_FFT(dim_, x0_, x1_);
 			kin_ = kin_FFT(dim_, x0_, x1_);
 
+			/// get the transformation matrix and x-grid
 			auto spec = dvr_FFT(dim_, x0_, x1_);
 			trafo_ = spec.first;
 			grid_ = spec.second;
@@ -81,8 +94,10 @@ public:
 			kin_ = unitarySimilarityTrafo(kin_, trafo_);
 			p_ = unitarySimilarityTrafo(p_, trafo_);
 
+			/// freq isn't used for FFT. Set to high value to see errors early. Argh.. ^_^
 			freq_ = -1000.;
 		} else if (type_ == "NumberBasis") {
+			/// Initialize a virtual grid that allows plotting the wavefunction (x is number operator)
 			grid_ = Vectord(dim_);
 			for (size_t i = 0; i < dim_; ++i) {
 				grid_(i) = i;

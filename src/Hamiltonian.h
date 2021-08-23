@@ -20,6 +20,7 @@ public:
 	Hamiltonian() = default;
 	~Hamiltonian() = default;
 
+	/// Add a summand to the SOP operator with corresponding coefficient
 	void emplace_back(double coeff, const ProductOperator& P) {
 		pair<double, ProductOperator> po({coeff, P});
 		emplace_back(po);

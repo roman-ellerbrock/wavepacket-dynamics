@@ -100,7 +100,7 @@ public:
 		if (movie) {
 			ofstream os("Psi." + to_string(count++) + ".dat");
 			os << "# time: " << t << "/" << tmax << endl;
-			Psi.plot2D(basis, 0, 1, os);
+			Psi.plot(basis, {}, os);
 		}
 		while (t + 1e-6 < tmax) {
 			double tnext = min(out, tmax - t) + t;
@@ -109,7 +109,7 @@ public:
 			if (movie) {
 				ofstream os("Psi." + to_string(count++) + ".dat");
 				os << "# time: " << t << "/" << tmax << endl;
-				Psi.plot2D(basis, 0, 1, os);
+				Psi.plot(basis, {}, os);
 			}
 		}
 	}

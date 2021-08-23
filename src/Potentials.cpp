@@ -11,6 +11,8 @@ double V_HO(const Vectord& x) {
 	return V;
 }
 
+/// Tully Model Potential from Sec. IV A in 1990 paper
+
 double V_tullyA_diabatic11(const Vectord& x) {
 	double A = 0.01;
 	double B = 1.6;

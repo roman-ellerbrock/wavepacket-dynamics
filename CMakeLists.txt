@@ -10,13 +10,12 @@ cmake_policy(SET "CMP0042" NEW)
 set(CMAKE_CXX_STANDARD 14)
 
 ### Add submodule for QuTree
+# If you have QuTree installed, feel free to use this instead:
 #find_package(QuTree)
-execute_process(COMMAND git submodule update --init -- external/QuTree
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-
 add_subdirectory(external/QuTree)
 include_directories("external/QuTree")
 
+# If you have Yaml installed, feel free to use this instead:
 #find_package(yaml-cpp REQUIRED)
 #include_directories(${YAML_CPP_INCLUDE_DIR})
 #add_library(Yaml INTERFACE IMPORTED)

@@ -26,5 +26,4 @@ run:
   tmax: 2.
   dt: 0.01
   out: 0.05
-  accuracy: 1e-6
 

@@ -7,14 +7,19 @@
 #include "Core/Tensor.h"
 #include "Basis.h"
 
+/**
+ * \brief This class represents the direct product wavefunction. It is a decorated tensor.
+ */
 class Wavefunction: public Tensorcd {
 public:
 
 	Wavefunction() = default;
 
+	/// \brief Create wavefunction and allocate its memory. Elements are set to zero
 	explicit Wavefunction(const Basis& basis)
 		: Tensorcd(basis.shape_) {}
 
+	/// \brief Occupy the wavefunction with direct product of 1D wavefunctions from Primitive basis.
 	void occupy(const Basis& basis) {
 		Tensorcd& A = *this;
 		const TensorShape& shape = A.shape();
@@ -35,6 +40,67 @@ public:
 		normalize();
 	}
 
+	/**
+	 * \brief Plot wavefunction without dynamic dimensionality.
+	 * @param basis Basis of the wavefunction
+	 * @param coords Coordinates that shall be plottet (up to two). If empty, it will plot the first one(s).
+	 * @param os stream that the output is written to
+	 */
+	void plot(const Basis& basis, const vector<size_t>& coords, ostream& os = cout) {
+		if (coords.empty()) {
+			if (basis.empty()) {
+				cerr << "Error: empty basis!\n";
+				exit(1);
+			}
+			vector<size_t> cs;
+			for (const PrimitiveBasis& prim : basis) {
+				cs.emplace_back(prim.coord_);
+			}
+			plot(basis, coords, os);
+		}
+		if (coords.size() == 1) {
+			plot1D(basis, coords.front(), os);
+		} else {
+			plot2D(basis, coords[0], coords[1], os);
+		}
+	}
+
+	/// \brief: Transform from finite basis rep. (FBR) to discrete variable rep. (DVR)
+	void fbrToDVR(const Basis& basis) {
+		Tensorcd& A = *this;
+		for (const auto& coord : basis) {
+			A = matrixTensor(coord.trafo_, A, coord.coord_);
+		}
+	}
+
+	/// \brief: Transform from discrete variable rep. (DVR) to finite basis rep. (FBR)
+	void dvrToFBR(const Basis& basis) {
+		Tensorcd& A = *this;
+		for (const auto& coord : basis) {
+			A = matrixTensor(coord.trafo_.adjoint(), A, coord.coord_);
+		}
+	}
+
+	/// \brief normalize the wavefunction and return norm.
+	double normalize() {
+		Tensorcd& A = *this;
+		double norm = A.dotProduct(A).frobeniusNorm();
+		norm = sqrt(norm);
+		A /= norm;
+		return norm;
+	}
+
+	/// Fancy template stuff, just necessary C++ details... ==>
+	using Tensorcd::Tensor;
+	using Tensorcd::operator=;
+	using Tensorcd::operator*=;
+
+	Wavefunction(const Tensorcd& A)
+		: Tensorcd(A) {}
+	/// <===
+private:
+
+	/// \brief Plot wavefunction in 1D
 	void plot1D(const Basis& basis, size_t k1 = 0, ostream& os = cout) {
 		const PrimitiveBasis& prim = basis.front();
 		const Tensorcd& A = *this;
@@ -69,54 +135,6 @@ public:
 		}
 	}
 
-	void plot(const Basis& basis, const vector<size_t>& coords, ostream& os = cout) {
-		if (coords.empty()) {
-			cerr << "Error: cannot plot wavefunction for empty coordinate vector.\n";
-			exit(1);
-		}
-		if (coords.size() == 1) {
-			plot1D(basis, coords.front(), os);
-		} else {
-			plot2D(basis, coords[0], coords[1], os);
-		}
-	}
-
-	void fbrToDVR(const Basis& basis) {
-		/**
-		 * \brief: Transform from finite basis rep. (FBR) to discrete variable rep. (DVR)
-		 */
-		Tensorcd& A = *this;
-		for (const auto& coord : basis) {
-			A = matrixTensor(coord.trafo_, A, coord.coord_);
-		}
-	}
-
-	void dvrToFBR(const Basis& basis) {
-		/**
-		 * \brief: Transform from discrete variable rep. (DVR) to finite basis rep. (FBR)
-		 */
-		Tensorcd& A = *this;
-		for (const auto& coord : basis) {
-			A = matrixTensor(coord.trafo_.adjoint(), A, coord.coord_);
-		}
-	}
-
-	double normalize() {
-		Tensorcd& A = *this;
-		double norm = A.dotProduct(A).frobeniusNorm();
-		norm = sqrt(norm);
-		A /= norm;
-		return norm;
-	}
-
-	/// Fancy template stuff, just necessary C++ details... ==>
-	using Tensorcd::Tensor;
-	using Tensorcd::operator=;
-	using Tensorcd::operator*=;
-
-	Wavefunction(const Tensorcd& A)
-		: Tensorcd(A) {}
-	/// <===
 };
 
 

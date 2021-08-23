@@ -13,6 +13,7 @@
  *   and annihilation-operators
  */
 
+/// \brief x-operator representation for Harmonic Osciallator
 Matrixcd x_HO(size_t dim, double freq) {
 	Matrixcd x(dim, dim);
 	for (int n = 0; n < dim; n++) {
@@ -29,6 +30,7 @@ Matrixcd x_HO(size_t dim, double freq) {
 	return x;
 }
 
+/// \brief p-operator representation for Harmonic Osciallator
 Matrixcd p_HO(size_t dim, double freq) {
 	Matrixcd p(dim, dim);
 	complex<double> imag(0., 1.);
@@ -46,6 +48,7 @@ Matrixcd p_HO(size_t dim, double freq) {
 	return p;
 }
 
+/// \brief T-operator representation for Harmonic Osciallator
 Matrixcd kin_HO(size_t dim, double freq) {
 	Matrixcd Kin(dim, dim);
 
@@ -67,6 +70,7 @@ Matrixcd kin_HO(size_t dim, double freq) {
 	return Kin;
 }
 
+/// \brief Build x-eigenvalues and FBR-DVR transformation matrix
 pair<Matrixcd, Vectord> dvr_HO(size_t dim, double freq, double x0) {
 	/// Build DVR from diagonalizing X matrix
 	/// x = U * x_ev * U^dagger
@@ -90,6 +94,8 @@ pair<Matrixcd, Vectord> dvr_HO(size_t dim, double freq, double x0) {
  *   Here, we build x- and p- as matrices. Hence, the FFT basis has the same
  *   implementation as the orthogonal basis functions.
  */
+
+/// \brief build grid in x-space
 Vectord xgrid_FFT(size_t dim, double x0, double x1) {
 	auto N = (double) dim;
 	double deltaX = (x1 - x0) / (N - 1);
@@ -101,6 +107,7 @@ Vectord xgrid_FFT(size_t dim, double x0, double x1) {
 	return x;
 }
 
+/// \brief build grid in p-space
 Vectord pgrid_FFT(size_t dim, double x0, double x1) {
 	auto N = (double) dim;
 	double deltaX = (x1 - x0) / (N - 1);
@@ -115,6 +122,7 @@ Vectord pgrid_FFT(size_t dim, double x0, double x1) {
 	return p;
 }
 
+/// \brief build dense x-operator in x-space (i.e. a full matrix)
 Matrixcd x_FFT(size_t dim, double x0, double x1) {
 	Vectord xgrid = xgrid_FFT(dim, x0, x1);
 
@@ -125,6 +133,7 @@ Matrixcd x_FFT(size_t dim, double x0, double x1) {
 	return x;
 }
 
+/// \brief build dense p-operator in p-space (i.e. a full matrix)
 Matrixcd p_FFT(size_t dim, double x0, double x1) {
 	/**
 	 * Rationale:
@@ -140,6 +149,7 @@ Matrixcd p_FFT(size_t dim, double x0, double x1) {
 	return p;
 }
 
+/// \brief build dense T-operator in p-space (i.e. a full matrix)
 Matrixcd kin_FFT(size_t dim, double x0, double x1) {
 	Vectord pgrid = pgrid_FFT(dim, x0, x1);
 
@@ -150,6 +160,7 @@ Matrixcd kin_FFT(size_t dim, double x0, double x1) {
 	return kin;
 }
 
+/// \brief build x-grid and transformation matrix
 pair<Matrixcd, Vectord> dvr_FFT(size_t dim, double x0, double x1) {
 	Vectord x = xgrid_FFT(dim, x0, x1);
 	Vectord p = pgrid_FFT(dim, x0, x1);
@@ -178,3 +189,12 @@ Matrixcd element(size_t dim, size_t n, size_t m) {
 	return P;
 }
 
+/**
+ * One could add Pauli x-, y-, z- operators, creation and annihilation operators.
+ * This would allow solving Ising model Hamiltonians, Spin-Boson models, etc.
+ * If you are interested, let me know. I can add content if someone is interested or
+ * help you implementing it yourself.
+ * Check out Wikipedia for more information on these systems, I can recommend implementing
+ * transversal field Ising models in 1D and 2D and solving these both classically and
+ * quantum mechanically.
+ */
