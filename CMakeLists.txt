@@ -11,7 +11,16 @@ set(CMAKE_CXX_STANDARD 14)
 
 ### Add submodule for QuTree
 #find_package(QuTree)
+#execute_process(COMMAND git submodule update --init -- external/QuTree
+#        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
+add_subdirectory(external/QuTree)
+
+# Set env and install headers as subdir of QuTree to avoid clashes
+#set(QUTREE_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/QuTree
+#        CACHE PATH "QuTree include directory")
+#install(DIRECTORY ${QUTREE_INCLUDE_DIR}/QuTree
+#        DESTINATION ${QuTree_INSTALL_INC_DIR})
 
 
 find_package(yaml-cpp REQUIRED)
