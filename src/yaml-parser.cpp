@@ -88,6 +88,9 @@ void run(const string& filename) {
 	Node basis_node = read_key<Node>(input, "Basis");
 	Basis basis(basis_node);
 
+
+	/// For this exercise we will not need more than the primitive Basis
+	exit(0);
 	/// Create Wavefunction and occupy
 	Wavefunction Psi(basis);
 	Psi.occupy(basis);
