@@ -98,7 +98,7 @@ public:
 
 		size_t count = 0;
 		if (movie) {
-			ofstream os("Psi." + to_string(count++) + ".dat");
+			ofstream os("tmp/Psi." + to_string(count++) + ".dat");
 			os << "# time: " << t << "/" << tmax << endl;
 			Psi.plot(basis, {}, os);
 		}
@@ -107,7 +107,7 @@ public:
 			integrateNext(Psi, t, dt, tnext, tmax, H, basis, krylov_size);
 
 			if (movie) {
-				ofstream os("Psi." + to_string(count++) + ".dat");
+				ofstream os("tmp/Psi." + to_string(count++) + ".dat");
 				os << "# time: " << t << "/" << tmax << endl;
 				Psi.plot(basis, {}, os);
 			}

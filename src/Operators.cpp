@@ -66,6 +66,19 @@ Hamiltonian harmonic_osciallator_pes(const Basis& basis) {
 	return H;
 }
 
+Hamiltonian eckhard_pes(const Basis& basis) {
+	/// T
+	Hamiltonian H = kinetic_energy(basis);
+
+	/// V_HO-PES
+	{
+		ProductOperator P;
+		P.V_ = V_Eckhard;
+		H.emplace_back(1., P);
+	}
+	return H;
+}
+
 Hamiltonian tully_A(const Basis& basis) {
 	/**
 	 * Rationale:

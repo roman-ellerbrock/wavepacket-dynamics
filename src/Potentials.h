@@ -6,7 +6,11 @@
 #define POTENTIALS_H
 #include "Core/Vector.h"
 
+/// Harmonic Oscillator potential as PES
 double V_HO(const Vectord& x);
+
+/// Eckhard Barrier
+double V_Eckhard(const Vectord& x);
 
 /// Model Potential from Sec. IV A in Tully 1990
 double V_tullyA_diabatic11(const Vectord& x);

@@ -56,7 +56,8 @@ public:
 			for (const PrimitiveBasis& prim : basis) {
 				cs.emplace_back(prim.coord_);
 			}
-			plot(basis, coords, os);
+			plot(basis, cs, os);
+			return;
 		}
 		if (coords.size() == 1) {
 			plot1D(basis, coords.front(), os);

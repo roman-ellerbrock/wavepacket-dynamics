@@ -1,0 +1,22 @@
+
+
+Basis:
+  - dim: 50
+    type: HO
+    freq: 1.
+    x0: 0.
+    coord: 0
+    wfx0: 1.2
+    wfp0: 0.
+    wffreq: 1.5
+
+Hamiltonian:
+  name: HO
+
+run:
+  job: Integrate
+  krylov_size: 10
+  tmax: 20.
+  dt: 0.1
+  out: 0.1
+

@@ -68,6 +68,8 @@ Hamiltonian read_hamiltonian(const Node& input, const Basis& basis) {
 		H = kinetic_energy(basis);
 	} else if (Hname == "HO_pes") {
 		H = harmonic_osciallator_pes(basis);
+	} else if (Hname == "Eckhard") {
+		H = eckhard_pes(basis);
 	} else if (Hname == "tullyA") {
 		H = tully_A(basis);
 	} else {
