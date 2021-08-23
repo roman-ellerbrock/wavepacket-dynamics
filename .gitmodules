@@ -1,0 +1,3 @@
+[submodule "external/QuTree"]
+	path = external/QuTree
+	url = https://github.com/roman-ellerbrock/QuTree

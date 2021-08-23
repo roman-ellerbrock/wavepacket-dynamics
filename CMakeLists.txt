@@ -9,7 +9,10 @@ cmake_policy(SET "CMP0042" NEW)
 
 set(CMAKE_CXX_STANDARD 14)
 
-find_package(QuTree REQUIRED)
+### Add submodule for QuTree
+#find_package(QuTree)
+
+
 
 find_package(yaml-cpp REQUIRED)
 include_directories(${YAML_CPP_INCLUDE_DIR})
