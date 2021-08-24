@@ -8,21 +8,23 @@ expanding the wavefunction in a cartesian product basis.
 Start by cloning the repo into your code directory. Make sure you check out
 the correct branch (see slides) before proceeding.
 
+
+
 0. Make sure you have the dependencies installed.
-1. Run *git submodule update --init --recursive* and *git submodule update*
-2. Create a build directory, e.g. named 'build' via: *mkdir build*
-3. Change directory to the directory via: *cd build*
-4. Run cmake on CMakeLists.txt via: *cmake ..*
-5. Run make via: *make*
+1. Run ./install.sh
 
 If everything worked out, you should have a binary named 'WavepacketDynamics' in
-your build directory. Otherwise, try fixing the issues or ask me (Roman)
+your build directory. Otherwise, try fixing the issues or ask me (romanellerbrock@gmail.com).
+
+In order to re-build the project, simply run
+1. cd build
+2. make
 
 FAQ:
 - If compiling QuTree crashes, try checking out branch *feature-distribute* in external/QuTree. This branch is designed to have less requirements.
 
 Dependencies:
-- CMake >=3.2,
+- CMake >=3.16,
 - C++ compilers
 - A plotting software (e.g. gnuplot, matplotlib, ...)
 
