@@ -79,14 +79,16 @@ Hamiltonian eckhard_pes(const Basis& basis) {
 	return H;
 }
 
-Hamiltonian tully_A(const Basis& basis) {
+Hamiltonian tully_A_adiabatic(const Basis& basis) {
 	/**
 	 * Rationale:
 	 * - from Sec. IV.) A of Ref: http://dx.doi.org/10.1063/1.459170
 	 * - use input: Coordinate 1: FFT grid, Coordinate 2: number basis
+	 * - written in mass-weighted coordinates V is V(q), not V(x), where q=sqrt(m)*x
+	 * - adiabatic model, i.e. no state interaction
 	 */
 
-	/// H = T + |0><0|*V_11 + (|0><1|+|1><0|)*V12 + |1><1|*V_22
+	/// H = T + |0><0|*V_adiabatic1 + |1><1|*V_adiabatic2
 	Hamiltonian H;
 	{ /// kinetic energy for FFT
 		ProductOperator P;
@@ -102,20 +104,56 @@ Hamiltonian tully_A(const Basis& basis) {
 		H.emplace_back(1., P);
 	}
 
-//	{
-//		Matrixcd proj = element(nstates, 0, 1) + element(nstates, 1, 0);
-//		ProductOperator P;
-//		P.emplace_back(proj, 1);
-//		P.V_ = V_tullyA_diabatic12;
-//		H.emplace_back(1., P);
-//	}
-//
-//	{
-//		ProductOperator P;
-//		P.emplace_back(element(nstates, 1, 1), 1);
-//		P.V_ = V_tullyA_diabatic22;
-//		H.emplace_back(1., P);
-//	}
+	{
+		ProductOperator P;
+		P.emplace_back(element(nstates, 1, 1), 1);
+		P.V_ = V_tullyA_adiabatic2;
+		H.emplace_back(1., P);
+	}
+	return H;
+}
+
+Hamiltonian tully_A(const Basis& basis) {
+	/**
+	 * Rationale:
+	 * - from Sec. IV.) A of Ref: http://dx.doi.org/10.1063/1.459170
+	 * - use input: Coordinate 1: FFT grid, Coordinate 2: number basis
+	 * - written in mass-weighted coordinates V is V(q), not V(x), where q=sqrt(m)*x
+	 */
+
+	/// H = T + |0><0|*V_11 + (|0><1|+|1><0|)*V12 + |1><1|*V_22
+	Hamiltonian H;
+	{ /// kinetic energy for FFT
+		ProductOperator P;
+		P.emplace_back(basis[0].kin_, 0);
+		H.emplace_back(1., P);
+	}
+
+	size_t nstates = 2;
+	{
+		/// |0><0|*V_11
+		ProductOperator P;
+		P.emplace_back(element(nstates, 0, 0), 1);
+		P.V_ = tullyA_diabatic11;
+		H.emplace_back(1., P);
+	}
+
+	{
+		/// (|0><1|+|1><0|)*V12
+		Matrixcd proj = element(nstates, 0, 1) + element(nstates, 1, 0);
+		ProductOperator P;
+		P.emplace_back(proj, 1);
+		P.V_ = tullyA_diabatic12;
+		H.emplace_back(1., P);
+	}
+
+	{
+		/// |1><1|*V_22
+		ProductOperator P;
+		P.emplace_back(element(nstates, 1, 1), 1);
+		P.V_ = tullyA_diabatic22;
+		H.emplace_back(1., P);
+	}
 
 	return H;
 }

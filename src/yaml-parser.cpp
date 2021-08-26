@@ -72,6 +72,8 @@ Hamiltonian read_hamiltonian(const Node& input, const Basis& basis) {
 		H = eckhard_pes(basis);
 	} else if (Hname == "tullyA") {
 		H = tully_A(basis);
+	} else if (Hname == "tullyA_adiabatic") {
+		H = tully_A_adiabatic(basis);
 	} else {
 		cerr << "wrong Hamiltonian name.\n";
 		exit(3);

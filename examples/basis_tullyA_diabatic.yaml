@@ -4,11 +4,11 @@ Basis:
   - dim: 500
     type: FFT
     x0: -1300.
-    x1: 700.
+    x1: 900.
     coord: 0
 
     wfx0: -300.
-    wfp0: 0.05
+    wfp0: 0.01
     wffreq: 0.005
 
 # electronic state basis (2 states)
@@ -18,12 +18,12 @@ Basis:
     theta: 0. # initial state will be set to (cos(theta), sin(theta))
 
 Hamiltonian:
-  name: tullyA_adiabatic
+  name: tullyA
 
 run:
   job: Integrate
   krylov_size: 10
   tmax: 10000.
   dt: 50.
-  out: 100.
+  out: 50.
 

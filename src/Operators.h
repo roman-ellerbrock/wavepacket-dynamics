@@ -28,4 +28,7 @@ Hamiltonian harmonic_osciallator_pes(const Basis& basis);
 /// Model system for diabatic coupling (Tully 1990, Sect. IV A)
 Hamiltonian tully_A(const Basis& basis);
 
+/// Model system for diabatic coupling (Tully 1990, Sect. IV A) with adiabatic states
+Hamiltonian tully_A_adiabatic(const Basis& basis);
+
 #endif //OPERATORS_H

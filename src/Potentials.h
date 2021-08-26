@@ -13,9 +13,11 @@ double V_HO(const Vectord& x);
 double V_Eckhard(const Vectord& x);
 
 /// Model Potential from Sec. IV A in Tully 1990
-double V_tullyA_diabatic11(const Vectord& x);
-double V_tullyA_diabatic12(const Vectord& x);
-double V_tullyA_diabatic22(const Vectord& x);
+double tullyA_diabatic11(const Vectord& q);
+double tullyA_diabatic12(const Vectord& q);
+double tullyA_diabatic22(const Vectord& q);
 
-double V_tullyA_adiabatic1(const Vectord& x);
+
+double V_tullyA_adiabatic1(const Vectord& q);
+double V_tullyA_adiabatic2(const Vectord& q);
 #endif //POTENTIALS_H
