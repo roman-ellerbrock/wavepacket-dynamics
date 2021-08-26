@@ -9,6 +9,7 @@
 #include "Util/QMConstants.h"
 #include "Output.h"
 #include <iomanip>
+#include <sys/stat.h>
 
 /**
  * \class Lanczos
@@ -108,6 +109,7 @@ public:
 		/// Wavefunction output
 		size_t count = 0;
 		if (print_output) {
+			mkdir("./tmp", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 			ofstream os("tmp/Psi." + to_string(count++) + ".dat");
 			os << "# time: " << t << "/" << tmax << endl;
 			auto pres = cout.precision();
