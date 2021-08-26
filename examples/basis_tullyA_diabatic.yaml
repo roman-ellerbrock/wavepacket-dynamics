@@ -1,14 +1,14 @@
 
 
 Basis:
-  - dim: 500
+  - dim: 400
     type: FFT
-    x0: -1300.
-    x1: 900.
+    x0: -400.
+    x1: 1600.
     coord: 0
 
     wfx0: -300.
-    wfp0: 0.01
+    wfp0: 0.5
     wffreq: 0.005
 
 # electronic state basis (2 states)
@@ -23,7 +23,7 @@ Hamiltonian:
 run:
   job: Integrate
   krylov_size: 10
-  tmax: 10000.
-  dt: 50.
+  tmax: 3000.
+  dt: 25.
   out: 50.
 

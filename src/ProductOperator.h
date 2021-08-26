@@ -52,12 +52,18 @@ public:
 		if (!V_) { return; }
 		const TensorShape& shape = Psi.shape();
 		for (size_t I = 0; I < shape.totalDimension(); ++I) {
-			auto idx = indexMapping(I, shape);
+			auto idx = indexMapping(I, shape); /// I -> (i0, i1, i2, ...)
 			auto x = gridPoint(idx, basis);
 			Psi(I) *= V_(x);
 		}
 	}
 
+	/**
+	 * \brief apply the productoperator to a wavefunction
+	 * @param Psi Operator is applied to |Psi>
+	 * @param basis
+	 * @return |P Psi>
+	 */
 	[[nodiscard]] Wavefunction apply(const Wavefunction& Psi, const Basis& basis) const {
 		Wavefunction pPsi(Psi);
 		/// Swipe through all operators (op) in product operator (this)

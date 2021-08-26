@@ -23,6 +23,11 @@ Hamiltonian:
   name: HO
 
 run:
-  job: Eigenstates
+  job: Integrate
   krylov_size: 10
+  tmax: 20.
+  dt: 0.1
+  out: 0.1
+
+
 

@@ -46,7 +46,7 @@ public:
 	 * @param coords Coordinates that shall be plottet (up to two). If empty, it will plot the first one(s).
 	 * @param os stream that the output is written to
 	 */
-	void plot(const Basis& basis, const vector<size_t>& coords, ostream& os = cout) {
+	void plot(const Basis& basis, const vector<size_t>& coords, ostream& os = cout) const {
 		if (coords.empty()) {
 			if (basis.empty()) {
 				cerr << "Error: empty basis!\n";
@@ -102,7 +102,7 @@ public:
 private:
 
 	/// \brief Plot wavefunction in 1D
-	void plot1D(const Basis& basis, size_t k1 = 0, ostream& os = cout) {
+	void plot1D(const Basis& basis, size_t k1 = 0, ostream& os = cout) const {
 		const PrimitiveBasis& prim = basis.front();
 		const Tensorcd& A = *this;
 		for (size_t i = 0; i < prim.dim_; ++i) {
@@ -110,7 +110,7 @@ private:
 		}
 	}
 
-	void plot2D(const Basis& basis, size_t k1, size_t k2, ostream& os = cout) {
+	void plot2D(const Basis& basis, size_t k1, size_t k2, ostream& os = cout) const {
 		/**
 		 * Rationale:
 		 * - Plot wavefunction after integrating out all but two coordinates.

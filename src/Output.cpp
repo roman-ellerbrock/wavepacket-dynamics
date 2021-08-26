@@ -14,7 +14,7 @@
 double expect(const Wavefunction& Psi, const ProductOperator& P, const Basis& basis) {
 	Wavefunction PPsi = P.apply(Psi, basis);
 	Matrixcd Prep = Psi.dotProduct(PPsi);
-	return real(Prep(0,0));
+	return real(Prep(0, 0));
 }
 
 /**
@@ -27,34 +27,57 @@ double expect(const Wavefunction& Psi, const ProductOperator& P, const Basis& ba
 double energy_expect(const Wavefunction& Psi, const Hamiltonian& H, const Basis& basis) {
 	Wavefunction HPsi = H.apply(Psi, basis);
 	Matrixcd Hrep = Psi.dotProduct(HPsi);
-	return real(Hrep(0,0));
+	return real(Hrep(0, 0));
 }
 
 /**
- * Calculate expectation values of wavepacket and print
- * @param Psi
- * @param H
- * @param basis
+ * Calculate expectation values of wavepacket and print them. Print wavefunction if ostream is given
+ * @param Psi Wavefunction
+ * @param H Hamiltonian of the system
+ * @param basis Basis of the system
+ * @param os_psi Output stream for plotting wavefunction
  */
-void output(const Wavefunction& Psi, const Hamiltonian& H, const Basis& basis) {
-	/// Note: This is a very simple output routine.
-	/// For number Basis, x is the particle number operator
+void output(const Wavefunction& Psi, const Hamiltonian& H, const Basis& basis, ostream* os_psi) {
 
 	/// Calculate total Energy
+	double norm = abs(Psi.dotProduct(Psi)(0, 0));
 	double energy = energy_expect(Psi, H, basis);
-	cout << "<H> = " << energy << endl;
+	cout << "<H> = " << energy << ", |Psi|^2 = " << norm << endl;
+	/// for each coordinate, give output depending on the basis type
 	for (const PrimitiveBasis& prim : basis) {
-		/// Calculate kinetic Energy
-		ProductOperator T(prim.kin_, prim.coord_);
-		double kin = expect(Psi, T, basis);
-		ProductOperator X(prim.x_, prim.coord_);
-		double x = expect(Psi, X, basis);
-		X.emplace_back(prim.x_, prim.coord_);
-		double x2 = expect(Psi, X, basis);
-		double dx = sqrt(abs(x*x - x2));
+		if (prim.type_ == "HO" || prim.type_ == "FFT") {
+			/// Calculate kinetic Energy
+			ProductOperator T(prim.kin_, prim.coord_);
+			double kin = expect(Psi, T, basis);
+			ProductOperator X(prim.x_, prim.coord_);
+			double x = expect(Psi, X, basis);
+			ProductOperator P(prim.p_, prim.coord_);
+			double p = expect(Psi, P, basis);
+			X.emplace_back(prim.x_, prim.coord_);
+			double x2 = expect(Psi, X, basis);
+			double dx = sqrt(abs(x * x - x2));
 
-		/// Make Output:
-		cout << "coord: " << prim.coord_ << ", <T> = " << kin << ",\t <x> = " << x << ",\t <dx> = " << dx << endl;
+			/// Make Output:
+			cout << "coord: " << prim.coord_ << ", <T> = " << kin << ", <p> = " << p << ", <x> = " << x << ", <dx> = "
+				 << dx << endl;
+		} else if (prim.type_ == "NumberBasis") {
+			cout << "coord: " << prim.coord_;
+			double av = 0;
+			for (size_t i = 0; i < prim.dim_; ++i) {
+				ProductOperator proj(element(prim.dim_, i, i), prim.coord_);
+				double el = expect(Psi, proj, basis);
+				cout << ", <P_" << i << "> = " << el;
+				av += i * el;
+			}
+			cout << ", <N> = " << av << endl;
+		}
+	}
+	cout << endl;
+
+	/// Plot wavefunction if ostream is provided
+	if (os_psi) {
+		ostream& os = *os_psi;
+		Psi.plot(basis, {}, os);
 	}
 }
 

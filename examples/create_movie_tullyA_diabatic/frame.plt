@@ -8,13 +8,13 @@ set terminal pngcairo
 
 # for tully plotting
 #set view 90,0,1
-set xr [-1300:700]
+set xr [-1000:1000]
 set zr [0:]
 
 do for [t=0:149] {
     outfile = sprintf('frame.%03d.png',t)
     set output outfile
-    out = 100
+    out = 50
     q = t*out
-    splot 'Psi.'.t.'.dat' title 'Tully Model A, diabatic g.s., t = '.q w l
+    splot 'Psi.'.t.'.dat' title 'Tully Model A, diabatic g.s., t = '.q 
 }

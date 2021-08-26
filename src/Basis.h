@@ -25,7 +25,11 @@ public:
 		for (const auto& prim : *this) {
 			dims.push_back(prim.dim_);
 		}
+
+		/// add one dimension that is used for multiple wavefunctions |Psi_i>
 		dims.push_back(1);
+
+		/// Build TensorShape from dimensions
 		shape_ = TensorShape(dims);
 	}
 	~Basis() = default;

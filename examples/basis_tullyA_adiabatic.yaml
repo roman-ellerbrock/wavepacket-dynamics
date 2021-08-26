@@ -1,25 +1,28 @@
 
 
 Basis:
-  - dim: 500
-    type: FFT
+# discretized space coordinate
+    # define grid
+  - type: FFT
+    dim: 500
     x0: -1300.
     x1: 700.
     coord: 0
-
+    # initial wavefunction parameters
     wfx0: -300.
     wfp0: 0.05
     wffreq: 0.005
 
 # electronic state basis (2 states)
-  - dim: 2
-    type: NumberBasis
+  - type: NumberBasis
+    dim: 2
     coord: 1
     theta: 0. # initial state will be set to (cos(theta), sin(theta))
 
 Hamiltonian:
   name: tullyA_adiabatic
 
+# run real-time propagation
 run:
   job: Integrate
   krylov_size: 10

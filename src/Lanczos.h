@@ -47,12 +47,16 @@ public:
 		vector<double> beta;
 		vector<double> alpha;
 
-		/// First step
+		/// Do the first step separately, since no beta exists
 		Wavefunction HPsi = H.apply(Psi, basis);
 
+		/// Calculate first alpha
+		/// Note: in general <Psi_i|H|Psi_j> is a matrix if multiple states are stored in Psi
 		Matrixcd alphamat = Psi.dotProduct(HPsi);
+		/// We use only a single state, so we read the only element of the 1x1 matrix
 		alpha.push_back(real(alphamat(0, 0)));
 
+		/// First step is simpler, because beta = 0
 		Psi = HPsi - alpha.back() * Psi;
 
 		/// remaining steps
@@ -77,6 +81,7 @@ public:
 			Hrep_(l + 1, l) = beta[l];
 			Hrep_(l, l + 1) = beta[l];
 		}
+
 		/// Diagonalize Hamiltonian matrix and save transformation matrix U and eigenvalues E.
 		auto spectrum = diagonalize(Hrep_);
 		U_ = spectrum.first;
@@ -98,38 +103,34 @@ public:
 	 */
 	void integrate(Wavefunction& Psi, double& t, double& dt, double tmax,
 		double out, const Hamiltonian& H, const Basis& basis, size_t krylov_size) {
-		bool movie = true;
 		bool print_output = true;
 
+		/// Wavefunction output
 		size_t count = 0;
-		if (movie) {
+		if (print_output) {
 			ofstream os("tmp/Psi." + to_string(count++) + ".dat");
 			os << "# time: " << t << "/" << tmax << endl;
-			Psi.plot(basis, {}, os);
-		}
-		if (print_output) {
 			auto pres = cout.precision();
 			cout << setprecision(2) << fixed;
-			cout << "time: " << t << " / " << tmax << " |Psi|^2  = " << Psi.normalize() << endl;
+			cout << "time: " << t << " / " << tmax << endl;
 			cout << setprecision(pres);
-			output(Psi, H, basis);
+			output(Psi, H, basis, &os);
 		}
 
+		/// Integrate till maximal integration time
 		while (t + 1e-6 < tmax) {
 			double tnext = min(out, tmax - t) + t;
-			integrateNext(Psi, t, dt, tnext, tmax, H, basis, krylov_size);
+			integrateNext(Psi, t, dt, tnext, H, basis, krylov_size);
 
-			if (movie) {
+			/// wavefunction output after a large step
+			if (print_output) {
 				ofstream os("tmp/Psi." + to_string(count++) + ".dat");
 				os << "# time: " << t << "/" << tmax << endl;
-				Psi.plot(basis, {}, os);
-			}
-			if (print_output) {
 				auto pres = cout.precision();
 				cout << setprecision(2) << fixed;
-				cout << "time: " << t << " / " << tmax << " |Psi|^2  = " << Psi.normalize() << endl;
+				cout << "time: " << t << " / " << tmax << endl;
 				cout << setprecision(pres);
-				output(Psi, H, basis);
+				output(Psi, H, basis, &os);
 			}
 		}
 	}
@@ -151,7 +152,7 @@ public:
 
 private:
 	/**
-	 * \brief Perform a step with a short-iterative Lanczos algorithm
+	 * \brief Perform a single step with the short-iterative Lanczos algorithm
 	 * @param Psi Wavefunction
 	 * @param t current time
 	 * @param dt time step
@@ -192,7 +193,7 @@ private:
 	 * @param tnext time to next output or end of integration
 	 * @param tmax maximal integration time
 	 */
-	void integrateNext(Wavefunction& Psi, double& t, double& dt, double tnext, double tmax,
+	void integrateNext(Wavefunction& Psi, double& t, double& dt, double tnext,
 		const Hamiltonian& H, const Basis& basis, size_t krylov_size) {
 		while (t + 1e-10 < tnext) {
 			dt = min(dt, tnext - t);
@@ -200,13 +201,6 @@ private:
 			calculate(Psi, H, basis, krylov_size);
 			/// make timestep
 			timeStep(Psi, t, dt);
-
-			/// minimal output
-/*			auto pres = cout.precision();
-			cout << setprecision(2) << fixed;
-			cout << "time: " << t << " / " << tmax << " |Psi|^2  = " << Psi.normalize() << endl;
-			cout << setprecision(pres);
-			*/
 		}
 	}
 };
