@@ -17,4 +17,5 @@ double V_tullyA_diabatic11(const Vectord& x);
 double V_tullyA_diabatic12(const Vectord& x);
 double V_tullyA_diabatic22(const Vectord& x);
 
+double V_tullyA_adiabatic1(const Vectord& x);
 #endif //POTENTIALS_H

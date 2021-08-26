@@ -102,6 +102,8 @@ public:
 			for (size_t i = 0; i < dim_; ++i) {
 				grid_(i) = i;
 			}
+			kin_ = kin_number(dim_);
+			x_ = x_number(dim_);
 		} else {
 			cerr << "Error: unknown basis type. Type was: " << type_ << endl;
 			exit(3);

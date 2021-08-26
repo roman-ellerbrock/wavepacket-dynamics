@@ -8,11 +8,13 @@ set terminal pngcairo
 
 # for tully plotting
 set view 90,0,1
-set xr [-12:20]
+#set xr [-450:900]
 
 do for [t=0:149] {
     outfile = sprintf('frame.%03d.png',t)
     set output outfile
-    q = t/5
-    splot 'Psi.'.t.'.dat' title '2D Harmonic Osciallator t = '.q w l
+    out = 50
+    q = t*out
+    # splot 'Psi.'.t.'.dat' title '2D Harmonic Osciallator t = '.q w l
+    splot 'Psi.'.t.'.dat' title 'Tully Model A, adiabatic g.s., t = '.q w l #, '../tully_adia1.dat' w l
 }

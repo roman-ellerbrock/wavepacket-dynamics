@@ -7,6 +7,7 @@
 #include "Wavefunction.h"
 #include "Hamiltonian.h"
 #include "Util/QMConstants.h"
+#include "Output.h"
 #include <iomanip>
 
 /**
@@ -16,10 +17,13 @@
 class Lanczos {
 public:
 	Lanczos() = default;
+
 	Lanczos(const Wavefunction& Psi, size_t krylov_size) {
 		initialize(Psi, krylov_size);
 	}
+
 	~Lanczos() = default;
+
 	void initialize(const Wavefunction& Psi, size_t krylov_size) {
 		krylovSpace_ = vector<Wavefunction>(krylov_size, Wavefunction(Psi.shape()));
 	}
@@ -79,7 +83,6 @@ public:
 		E_ = spectrum.second;
 	}
 
-
 	/**
 	 * \brief Perform Short iterative Lanczos (SIL) integration to solve time-dependent Schrödinger Equation
 	 * @param Psi initial Wavefunction Psi(t), will be Psi(tmax) at out
@@ -96,6 +99,7 @@ public:
 	void integrate(Wavefunction& Psi, double& t, double& dt, double tmax,
 		double out, const Hamiltonian& H, const Basis& basis, size_t krylov_size) {
 		bool movie = true;
+		bool print_output = true;
 
 		size_t count = 0;
 		if (movie) {
@@ -103,6 +107,14 @@ public:
 			os << "# time: " << t << "/" << tmax << endl;
 			Psi.plot(basis, {}, os);
 		}
+		if (print_output) {
+			auto pres = cout.precision();
+			cout << setprecision(2) << fixed;
+			cout << "time: " << t << " / " << tmax << " |Psi|^2  = " << Psi.normalize() << endl;
+			cout << setprecision(pres);
+			output(Psi, H, basis);
+		}
+
 		while (t + 1e-6 < tmax) {
 			double tnext = min(out, tmax - t) + t;
 			integrateNext(Psi, t, dt, tnext, tmax, H, basis, krylov_size);
@@ -111,6 +123,13 @@ public:
 				ofstream os("tmp/Psi." + to_string(count++) + ".dat");
 				os << "# time: " << t << "/" << tmax << endl;
 				Psi.plot(basis, {}, os);
+			}
+			if (print_output) {
+				auto pres = cout.precision();
+				cout << setprecision(2) << fixed;
+				cout << "time: " << t << " / " << tmax << " |Psi|^2  = " << Psi.normalize() << endl;
+				cout << setprecision(pres);
+				output(Psi, H, basis);
 			}
 		}
 	}
@@ -183,10 +202,11 @@ private:
 			timeStep(Psi, t, dt);
 
 			/// minimal output
-			auto pres = cout.precision();
+/*			auto pres = cout.precision();
 			cout << setprecision(2) << fixed;
 			cout << "time: " << t << " / " << tmax << " |Psi|^2  = " << Psi.normalize() << endl;
 			cout << setprecision(pres);
+			*/
 		}
 	}
 };

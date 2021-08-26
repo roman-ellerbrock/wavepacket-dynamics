@@ -189,6 +189,21 @@ Matrixcd element(size_t dim, size_t n, size_t m) {
 	return P;
 }
 
+Matrixcd kin_number(size_t dim_) {
+	Matrixcd T(dim_, dim_);
+	T(0, 1) = 1;
+	T(1, 0) = 1;
+	return T;
+}
+
+Matrixcd x_number(size_t dim_) {
+	Matrixcd x(dim_, dim_);
+	for (size_t i = 0; i < dim_; ++i) {
+		x(i, i) = i;
+	}
+	return x;
+}
+
 /**
  * One could add Pauli x-, y-, z- operators, creation and annihilation operators.
  * This would allow solving Ising model Hamiltonians, Spin-Boson models, etc.

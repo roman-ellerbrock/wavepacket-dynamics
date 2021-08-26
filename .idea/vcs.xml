@@ -3,6 +3,9 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/external/QuTree" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/external/QuTree/external/eigen" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/external/QuTree/tests/external/unittest-cpp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/external/QuTree/tests/external/unittest-cpp/docs" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/external/yaml-cpp" vcs="Git" />
   </component>
 </project>

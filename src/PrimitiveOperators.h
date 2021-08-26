@@ -20,6 +20,8 @@ pair<Matrixcd, Vectord> dvr_FFT(size_t dim, double x0, double x1);
 
 /// Electronic-/Number-basis
 Matrixcd element(size_t dim, size_t n, size_t m);
+Matrixcd kin_number(size_t dim_);
+Matrixcd x_number(size_t dim_);
 
 
 #endif //PRIMITIVEOPERATORS_H

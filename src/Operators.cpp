@@ -97,25 +97,25 @@ Hamiltonian tully_A(const Basis& basis) {
 	size_t nstates = 2;
 	{
 		ProductOperator P;
-		P.emplace_back(element(nstates, 1, 1), 1);
-		P.V_ = V_tullyA_diabatic11;
+		P.emplace_back(element(nstates, 0, 0), 1);
+		P.V_ = V_tullyA_adiabatic1;
 		H.emplace_back(1., P);
 	}
 
-	{
-		Matrixcd proj = element(nstates, 0, 1) + element(nstates, 1, 0);
-		ProductOperator P;
-		P.emplace_back(proj, 1);
-		P.V_ = V_tullyA_diabatic12;
-		H.emplace_back(1., P);
-	}
-
-	{
-		ProductOperator P;
-		P.emplace_back(element(nstates, 1, 1), 1);
-		P.V_ = V_tullyA_diabatic22;
-		H.emplace_back(1., P);
-	}
+//	{
+//		Matrixcd proj = element(nstates, 0, 1) + element(nstates, 1, 0);
+//		ProductOperator P;
+//		P.emplace_back(proj, 1);
+//		P.V_ = V_tullyA_diabatic12;
+//		H.emplace_back(1., P);
+//	}
+//
+//	{
+//		ProductOperator P;
+//		P.emplace_back(element(nstates, 1, 1), 1);
+//		P.V_ = V_tullyA_diabatic22;
+//		H.emplace_back(1., P);
+//	}
 
 	return H;
 }
