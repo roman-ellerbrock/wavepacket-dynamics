@@ -17,6 +17,11 @@ double expect(const Wavefunction& Psi, const ProductOperator& P, const Basis& ba
 	return real(Prep(0, 0));
 }
 
+std::complex<double> autocorrelation(const Wavefunction &Psi, const Wavefunction &Psi0, const Basis &basis) {
+  Matrixcd autoc = Psi.dotProduct(Psi0);
+  return autoc(0, 0);
+}
+
 /**
  * \brief Calculate energy expectation value <Psi|H|Psi>
  * @param Psi
@@ -37,12 +42,14 @@ double energy_expect(const Wavefunction& Psi, const Hamiltonian& H, const Basis&
  * @param basis Basis of the system
  * @param os_psi Output stream for plotting wavefunction
  */
-void output(const Wavefunction& Psi, const Hamiltonian& H, const Basis& basis, ostream* os_psi) {
+void output(const Wavefunction& Psi, const Wavefunction &Psi0, const Hamiltonian& H, const Basis& basis, ostream* os_psi) {
 
 	/// Calculate total Energy
 	double norm = abs(Psi.dotProduct(Psi)(0, 0));
 	double energy = energy_expect(Psi, H, basis);
+  std::complex<double> ac = autocorrelation(Psi, Psi0, basis);
 	cout << "<H> = " << energy << ", |Psi|^2 = " << norm << endl;
+  cout << "<Psi(0)|Psi(t)> = " << real(ac) << " + " << imag(ac) << "i" << endl;
 	/// for each coordinate, give output depending on the basis type
 	for (const PrimitiveBasis& prim : basis) {
 		if (prim.type_ == "HO" || prim.type_ == "FFT") {

@@ -10,6 +10,6 @@
 #include "PrimitiveOperators.h"
 
 /// Print information about wavefunction to cout and plot the wavefunction to os_psi if provided
-void output(const Wavefunction& Psi, const Hamiltonian& H, const Basis& basis, ostream* os_psi = nullptr);
+void output(const Wavefunction& Psi, const Wavefunction &Psi0, const Hamiltonian& H, const Basis& basis, ostream* os_psi = nullptr);
 
 #endif //OUTPUT_H

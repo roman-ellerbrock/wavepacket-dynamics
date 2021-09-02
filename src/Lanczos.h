@@ -105,6 +105,7 @@ public:
 	void integrate(Wavefunction& Psi, double& t, double& dt, double tmax,
 		double out, const Hamiltonian& H, const Basis& basis, size_t krylov_size) {
 		bool print_output = true;
+    Wavefunction *Psi0 = new Wavefunction(Psi);
 
 		/// Wavefunction output
 		size_t count = 0;
@@ -116,7 +117,7 @@ public:
 			cout << setprecision(2) << fixed;
 			cout << "time: " << t << " / " << tmax << endl;
 			cout << setprecision(pres);
-			output(Psi, H, basis, &os);
+			output(Psi, *Psi0, H, basis, &os);
 		}
 
 		/// Integrate till maximal integration time
@@ -132,7 +133,7 @@ public:
 				cout << setprecision(2) << fixed;
 				cout << "time: " << t << " / " << tmax << endl;
 				cout << setprecision(pres);
-				output(Psi, H, basis, &os);
+				output(Psi, *Psi0, H, basis, &os);
 			}
 		}
 	}
