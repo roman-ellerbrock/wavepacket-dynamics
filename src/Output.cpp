@@ -42,14 +42,18 @@ double energy_expect(const Wavefunction& Psi, const Hamiltonian& H, const Basis&
  * @param basis Basis of the system
  * @param os_psi Output stream for plotting wavefunction
  */
-void output(const Wavefunction& Psi, const Wavefunction &Psi0, const Hamiltonian& H, const Basis& basis, ostream* os_psi) {
+void output(const Wavefunction& Psi, const Wavefunction &Psi0, const Hamiltonian& H, const Basis& basis, const double t, FILE *fp, ostream *os_psi) {
 
 	/// Calculate total Energy
 	double norm = abs(Psi.dotProduct(Psi)(0, 0));
 	double energy = energy_expect(Psi, H, basis);
   std::complex<double> ac = autocorrelation(Psi, Psi0, basis);
+  if (imag(ac) >= 0) {
+    fprintf(fp,"%10f %.5f+%.5fj\n",t,real(ac),imag(ac)); 
+  } else {
+    fprintf(fp,"%10f %.5f%.5fj\n",t,real(ac),imag(ac));
+  }
 	cout << "<H> = " << energy << ", |Psi|^2 = " << norm << endl;
-  cout << "<Psi(0)|Psi(t)> = " << real(ac) << " + " << imag(ac) << "i" << endl;
 	/// for each coordinate, give output depending on the basis type
 	for (const PrimitiveBasis& prim : basis) {
 		if (prim.type_ == "HO" || prim.type_ == "FFT") {
