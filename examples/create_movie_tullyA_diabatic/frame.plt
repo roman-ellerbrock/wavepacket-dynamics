@@ -8,10 +8,10 @@ set terminal pngcairo
 
 # for tully plotting
 #set view 90,0,1
-set xr [-1000:1000]
+#set xr [-1000:1000]
 set zr [0:]
 
-do for [t=0:149] {
+do for [t=0:130] {
     outfile = sprintf('frame.%03d.png',t)
     set output outfile
     out = 50

@@ -164,11 +164,6 @@ Matrixcd kin_FFT(size_t dim, double x0, double x1) {
 pair<Matrixcd, Vectord> dvr_FFT(size_t dim, double x0, double x1) {
 	Vectord x = xgrid_FFT(dim, x0, x1);
 	Vectord p = pgrid_FFT(dim, x0, x1);
-	cout << "x:\n";
-	x.print();
-	cout << "p:\n";
-	p.print();
-
 
 	Matrixcd U(dim, dim);
 	for (int i = 0; i < dim; ++i) {
@@ -179,9 +174,6 @@ pair<Matrixcd, Vectord> dvr_FFT(size_t dim, double x0, double x1) {
 			/// dx = (x1-x0)/(N-1) * 2pi / (dx*N)
 		}
 	}
-/*	auto s = U * U.adjoint();
-	cout << "res: " << residual(s, identityMatrixcd(dim)) << endl;
-	getchar();*/
 	return {U, x};
 }
 

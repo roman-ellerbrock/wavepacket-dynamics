@@ -32,7 +32,7 @@ public:
 		if (type_ == "HO") {
 			freq_ = read_key<double>(node, "freq");
 			x0_ = read_key<double>(node, "x0");
-			wffreq_ = read_key<double>(node, "wffreq");
+			wffreq_ = read_key<double>(node, "wffreq"); // currently not working
 			wfx0_ = read_key<double>(node, "wfx0");
 			wfp0_ = read_key<double>(node, "wfp0");
 		} else if (type_ == "NumberBasis") {
@@ -121,9 +121,10 @@ public:
 				psi(1) = sin(wffreq_);
 			}
 		} else {
+			double sigma = 20. / wfp0_;
 			for (size_t i = 0; i < dim_; ++i) {
 				/// gauss wavepacket with momentum wfp0 located at wfx0
-				psi(i) = exp(QM::im * wfp0_* grid_(i)) * exp(-0.5 * wffreq_ * pow(grid_(i) - wfx0_, 2));
+				psi(i) = exp(QM::im * wfp0_* grid_(i)) * exp(-0.5 * pow((grid_(i) - wfx0_) / sigma, 2));
 			}
 			normalize(psi);
 		}

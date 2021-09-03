@@ -59,12 +59,13 @@ void output(const Wavefunction& Psi, const Wavefunction& Psi0, const Hamiltonian
 			double x = expect(Psi, X, basis);
 			ProductOperator P(prim.p_, prim.coord_);
 			double p = expect(Psi, P, basis);
+			double dp = sqrt(abs(p*p-2.*kin));
 			X.emplace_back(prim.x_, prim.coord_);
 			double x2 = expect(Psi, X, basis);
 			double dx = sqrt(abs(x * x - x2));
 
 			/// Make Output:
-			cout << "coord: " << prim.coord_ << ", <T> = " << kin << ", <p> = " << p << ", <x> = " << x << ", <dx> = "
+			cout << "coord: " << prim.coord_ << ", <T> = " << kin << ", <p> = " << p << ", <dp> = " << dp << ", <x> = " << x << ", <dx> = "
 				 << dx << endl;
 		} else if (prim.type_ == "NumberBasis") {
 			cout << "coord: " << prim.coord_;
