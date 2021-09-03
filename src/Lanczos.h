@@ -105,14 +105,14 @@ public:
 	void integrate(Wavefunction& Psi, double& t, double& dt, double tmax,
 		double out, const Hamiltonian& H, const Basis& basis, size_t krylov_size) {
 		bool print_output = true;
-    Wavefunction *Psi0 = new Wavefunction(Psi);
+		Wavefunction Psi0(Psi);
 
 		/// Wavefunction output
 		size_t count = 0;
-    FILE *fp;
+		ofstream fp("autocorrelation.txt");
 		if (print_output) {
-      fp = fopen("autocorrelation.txt","w");
-      fprintf(fp,"%10s %15s\n","Time","<Psi(0)|Psi(t)>");
+			fp << "Time      <Psi(0)|Psi(t)>\n";
+//      	fprintf(fp,"%10s %15s\n","Time","<Psi(0)|Psi(t)>");
 			mkdir("./tmp", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 			ofstream os("tmp/Psi." + to_string(count++) + ".dat");
 			os << "# time: " << t << "/" << tmax << endl;
@@ -120,7 +120,7 @@ public:
 			cout << setprecision(2) << fixed;
 			cout << "time: " << t << " / " << tmax << endl;
 			cout << setprecision(pres);
-			output(Psi, *Psi0, H, basis, t, fp, &os);
+			output(Psi, Psi0, H, basis, t, &fp, &os);
 		}
 
 		/// Integrate till maximal integration time
@@ -136,10 +136,9 @@ public:
 				cout << setprecision(2) << fixed;
 				cout << "time: " << t << " / " << tmax << endl;
 				cout << setprecision(pres);
-				output(Psi, *Psi0, H, basis, t, fp, &os);
+				output(Psi, Psi0, H, basis, t, &fp, &os);
 			}
 		}
-    fclose(fp);
 	}
 
 	void print() const {

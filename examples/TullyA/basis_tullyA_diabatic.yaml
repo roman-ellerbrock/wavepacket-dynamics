@@ -1,14 +1,14 @@
 
 
 Basis:
-  - dim: 400
+  - dim: 500
     type: FFT
-    x0: -400.
-    x1: 1600.
+    x0: -1000.
+    x1: 1000.
     coord: 0
 
     wfx0: -300.
-    wfp0: 0.5
+    wfp0: 0.05
     wffreq: 0.005
 
 # electronic state basis (2 states)

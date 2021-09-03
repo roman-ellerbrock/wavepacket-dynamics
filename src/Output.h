@@ -11,6 +11,7 @@
 #include <stdio.h>
 
 /// Print information about wavefunction to cout and plot the wavefunction to os_psi if provided
-void output(const Wavefunction& Psi, const Wavefunction &Psi0, const Hamiltonian& H, const Basis& basis, const double t, FILE *fp, ostream* os_psi = nullptr);
+void output(const Wavefunction& Psi, const Wavefunction& Psi0, const Hamiltonian& H, const Basis& basis,
+	const double t, ostream *fp = nullptr, ostream *os_psi = nullptr);
 
 #endif //OUTPUT_H

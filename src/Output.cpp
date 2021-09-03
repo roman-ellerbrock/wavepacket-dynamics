@@ -17,9 +17,9 @@ double expect(const Wavefunction& Psi, const ProductOperator& P, const Basis& ba
 	return real(Prep(0, 0));
 }
 
-std::complex<double> autocorrelation(const Wavefunction &Psi, const Wavefunction &Psi0, const Basis &basis) {
-  Matrixcd autoc = Psi.dotProduct(Psi0);
-  return autoc(0, 0);
+std::complex<double> autocorrelation(const Wavefunction& Psi, const Wavefunction& Psi0, const Basis& basis) {
+	Matrixcd autoc = Psi.dotProduct(Psi0);
+	return autoc(0, 0);
 }
 
 /**
@@ -42,17 +42,12 @@ double energy_expect(const Wavefunction& Psi, const Hamiltonian& H, const Basis&
  * @param basis Basis of the system
  * @param os_psi Output stream for plotting wavefunction
  */
-void output(const Wavefunction& Psi, const Wavefunction &Psi0, const Hamiltonian& H, const Basis& basis, const double t, FILE *fp, ostream *os_psi) {
+void output(const Wavefunction& Psi, const Wavefunction& Psi0, const Hamiltonian& H,
+	const Basis& basis, const double t, ostream *fp, ostream *os_psi) {
 
 	/// Calculate total Energy
 	double norm = abs(Psi.dotProduct(Psi)(0, 0));
 	double energy = energy_expect(Psi, H, basis);
-  std::complex<double> ac = autocorrelation(Psi, Psi0, basis);
-  if (imag(ac) >= 0) {
-    fprintf(fp,"%10f %.5f+%.5fj\n",t,real(ac),imag(ac)); 
-  } else {
-    fprintf(fp,"%10f %.5f%.5fj\n",t,real(ac),imag(ac));
-  }
 	cout << "<H> = " << energy << ", |Psi|^2 = " << norm << endl;
 	/// for each coordinate, give output depending on the basis type
 	for (const PrimitiveBasis& prim : basis) {
@@ -84,6 +79,13 @@ void output(const Wavefunction& Psi, const Wavefunction &Psi0, const Hamiltonian
 		}
 	}
 	cout << endl;
+
+	/// Print autocorrelation
+	std::complex<double> ac = autocorrelation(Psi, Psi0, basis);
+	if (fp) {
+		ostream& file = *fp;
+		file << t << " " << real(ac) << " " << imag(ac) << " " << abs(ac) << "\n";
+	}
 
 	/// Plot wavefunction if ostream is provided
 	if (os_psi) {
