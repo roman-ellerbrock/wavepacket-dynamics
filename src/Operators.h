@@ -25,6 +25,9 @@ Hamiltonian kinetic_energy(const Basis& basis);
 /// n-dimensional HO but V is evaluated using a PES
 Hamiltonian harmonic_osciallator_pes(const Basis& basis);
 
+/// n-dimensional abs(x) potential but V is evaluated using a PES
+Hamiltonian abs_pes(const Basis& basis, double omega);
+
 /// Model system for diabatic coupling (Tully 1990, Sect. IV A)
 Hamiltonian tully_A(const Basis& basis);
 

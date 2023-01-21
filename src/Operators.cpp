@@ -53,6 +53,27 @@ Hamiltonian kinetic_energy(const Basis& basis) {
 	return H;
 }
 
+Hamiltonian abs_pes(const Basis& basis, double omega) {
+	/// T
+	Hamiltonian H = kinetic_energy(basis);
+
+	/// V_HO-PES
+	{
+		ProductOperator P;
+		auto f = [omega](const Vectord& x) {
+			double V = 0.;
+			for (size_t k = 0; k < x.dim(); ++k) {
+				V += omega * abs(x(k));
+			}
+			return V;
+		};
+
+		P.V_ = f;
+		H.emplace_back(1., P);
+	}
+	return H;
+}
+
 Hamiltonian harmonic_osciallator_pes(const Basis& basis) {
 	/// T
 	Hamiltonian H = kinetic_energy(basis);

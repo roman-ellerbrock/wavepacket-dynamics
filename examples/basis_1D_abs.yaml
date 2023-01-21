@@ -1,19 +1,20 @@
 
 
 Basis:
-  - dim: 50
+  - dim: 1000
     type: HO
     freq: 1.
     x0: 0.
     coord: 0
-    wfx0: 0.
+    wfx0: 0.1
     wfp0: 0.
-    wffreq: 1.
+    wffreq: 1.45
 
 Hamiltonian:
-  name: HO
+  name: abs
+  freq: 0.5
 
 run:
   job: Eigenstates
-  krylov_size: 10
+  krylov_size: 500
 
